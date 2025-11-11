@@ -97,7 +97,15 @@ class Barista {
    // private 
 }
 
-abstract class CoffeeBean {
+class CoffeeBean {
+
+    public CoffeeBean(RoastLevel roastLevel, ProcessingMethod processingMethod, int altitude) {
+        this.roastLevel = roastLevel;
+        this.processingMethod = processingMethod;
+        this.altitude = altitude;
+    }
+
+
 
     RoastLevel roastLevel;
    // String origin; 
@@ -105,13 +113,14 @@ abstract class CoffeeBean {
     int altitude; // For example, 2000 MASL
     //Species species;
    // String supplier;
-   String varietal;
+   //String varietal; // TODO make this an arraylist?
 
+   
 
    @Override
    public String toString() {
     return "CoffeeBean [roastLevel=" + roastLevel + ", processingMethod=" + processingMethod + ", altitude=" + altitude
-            + ", varietal=" + varietal + "]";
+             + "]";
    }
 
     
@@ -122,23 +131,20 @@ abstract class CoffeeBean {
 class espressoBlend {
 
     List<blendComponent> coffeeBlend;
+    ArrayList<String> varietals;
+    ArrayList<String> producers;
+    String blendName;
 
 
-    espressoBlend() {
+
+    espressoBlend(String blendName, ArrayList<blendComponent> coffeeBlend) {
         this.coffeeBlend = new ArrayList<>();
+        this.blendName = blendName;
+        this.coffeeBlend = coffeeBlend;
     }
 
 
-    public void initBlends() {
-
-        espressoBlend blend = new espressoBlend();
-
-        blendComponent newComponent = new blendComponent(null, 0); // Coffee bean OBJECT AND PERCENTAGE
-
-
-
-    }
-
+  // add to blend arraylist 
 
 
 
@@ -168,6 +174,34 @@ class blendComponent {
     
 }
 
+class presetCoffee {
+
+
+      public void initBlends() {
+
+        espressoBlend blend = new espressoBlend();
+
+        CoffeeBean brazilCerrado = new CoffeeBean(RoastLevel.MEDIUM, ProcessingMethod.NATURAL, 1200);
+        CoffeeBean colombiaBruselas = new CoffeeBean(RoastLevel.MEDIUM, ProcessingMethod.WASHED, 1400);
+        CoffeeBean colombiaWushWush = new CoffeeBean(RoastLevel.LIGHT, ProcessingMethod.ANAEROBIC_NATURAL, 2000);
+        CoffeeBean sumatraGayoMusara = new CoffeeBean(RoastLevel.MEDIUM, ProcessingMethod.WASHED, 1400);
+       // CoffeeBean tapanuliSidra = new CoffeeBean(null, null, 0)
+
+
+        blendComponent peanutButterBlendComponent = new blendComponent(brazilCerrado, 20); // Coffee bean OBJECT AND PERCENTAGE
+        blendComponent peanutButterBlendComponent2 = new blendComponent(sumatraGayoMusara, 40);
+        blendComponent peanutButterBlendComponent3 = new blendComponent(colombiaBruselas, 40);
+
+        ArrayList<blendComponent> newBlend = new ArrayList<>();
+        newBlend.add(peanutButterBlendComponent);
+        newBlend.add(peanutButterBlendComponent2);
+        newBlend.add(peanutButterBlendComponent3);
+        espressoBlend peanutButterBlend = new espressoBlend( "Peanut Butter", newBlend);
+
+
+    }
+
+}
 
 class singleOriginBean {
     
@@ -215,9 +249,15 @@ class filterBasedOrder extends menuItem {
 
 
 
+
+
+
+
 class main {
 
     public static void main(String[] args) {
+
+        // Initialise blends.
         
         System.out.println("Welcome to ENTER NAME OF COFFEE SHOP!");
 
@@ -245,7 +285,8 @@ class main {
 
         int choice = In.nextInt();
         if (choice == 1) {
-            // sort by body            
+            // sort by body
+            Collections.sort()            
         }
 
         if (choice == 2) {
