@@ -176,10 +176,11 @@ class blendComponent {
     
 }
 
-class presetCoffee {
+// Initialise all coffee blends, and return san arraylist of blends of espressoBlend objects?
+class PresetCoffee {
 
 
-      public void initBlends() {
+      public ArrayList<espressoBlend> initBlends() {
 
     //    espressoBlend blend = new espressoBlend();
 
@@ -187,6 +188,8 @@ class presetCoffee {
         CoffeeBean colombiaBruselas = new CoffeeBean(RoastLevel.MEDIUM, ProcessingMethod.WASHED, 1400);
         CoffeeBean colombiaWushWush = new CoffeeBean(RoastLevel.LIGHT, ProcessingMethod.ANAEROBIC_NATURAL, 2000);
         CoffeeBean sumatraGayoMusara = new CoffeeBean(RoastLevel.MEDIUM, ProcessingMethod.WASHED, 1400);
+        CoffeeBean javaLoa = new CoffeeBean(RoastLevel.MEDIUM_DARK, ProcessingMethod.ANAEROBIC_NATURAL, 1700);
+        CoffeeBean sumatraKerinci = new CoffeeBean(RoastLevel.LIGHT, ProcessingMethod.NATURAL, 1200);
        // CoffeeBean tapanuliSidra = new CoffeeBean(null, null, 0)
 
 
@@ -199,6 +202,17 @@ class presetCoffee {
         newBlend.add(peanutButterBlendComponent2);
         newBlend.add(peanutButterBlendComponent3);
         espressoBlend peanutButterBlend = new espressoBlend( "Peanut Butter", newBlend);
+
+        
+        
+        
+        
+        
+        
+        ArrayList<blendComponent> newBlend2 = new ArrayList<>();
+        newBlend2.add(new blendComponent(sumatraKerinci, 30));
+
+        //return newBlend;
 
 
     }
@@ -259,6 +273,8 @@ class main {
 
     public static void main(String[] args) {
 
+        PresetCoffee presetCoffee = new PresetCoffee();
+        presetCoffee.initBlends();
         // Initialise blends.
         
         System.out.println("Welcome to ENTER NAME OF COFFEE SHOP!");
