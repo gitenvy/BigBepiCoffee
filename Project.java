@@ -121,17 +121,31 @@ abstract class CoffeeBean {
 
 class espressoBlend {
 
-    List<blendComponent> blend;
+    List<blendComponent> coffeeBlend;
 
 
     espressoBlend() {
-        List<blendComponent> blend = new ArrayList<>();
+        this.coffeeBlend = new ArrayList<>();
     }
 
-    
 
-    
+    public void initBlends() {
+
+        espressoBlend blend = new espressoBlend();
+
+        blendComponent newComponent = new blendComponent(null, 0); // Coffee bean OBJECT AND PERCENTAGE
+
+
+
+    }
+
+
+
+
+
 }
+
+
 
 
 class blendComponent {
@@ -186,7 +200,6 @@ class espressoBasedOrder extends menuItem {
     ShotType shotType;
     EspressoBasedDrink espressoBasedOrder;
 
-
     // Store things like strength, bitterness in the enum!
 
 
@@ -199,12 +212,14 @@ class filterBasedOrder extends menuItem {
     
 }
 
+
+
+
 class main {
 
     public static void main(String[] args) {
         
         System.out.println("Welcome to ENTER NAME OF COFFEE SHOP!");
-
 
         System.out.println("What kind of drink do you want to order?");
         System.out.println("1. Espresso Based");
