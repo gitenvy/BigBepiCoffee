@@ -4,8 +4,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-//hello world
-
 enum EspressoBasedDrink {
 
 
@@ -14,7 +12,7 @@ enum EspressoBasedDrink {
     FLAT_WHITE(4, 5, 4, 4),
     MAGIC_LATTE(5, 5, 5, 5);
 
-// TODO MAKE MENU ITEMS
+
     private int body;
 
     private double price;
@@ -181,7 +179,7 @@ class presetCoffee {
 
       public void initBlends() {
 
-    //    espressoBlend blend = new espressoBlend();
+      //  espressoBlend blend = new espressoBlend();
 
         CoffeeBean brazilCerrado = new CoffeeBean(RoastLevel.MEDIUM, ProcessingMethod.NATURAL, 1200);
         CoffeeBean colombiaBruselas = new CoffeeBean(RoastLevel.MEDIUM, ProcessingMethod.WASHED, 1400);
@@ -288,7 +286,7 @@ class main {
         int choice = In.nextInt();
         if (choice == 1) {
             // sort by body
-         //   Collections.sort()            
+          //  Collections.sort()            
         }
 
         if (choice == 2) {
