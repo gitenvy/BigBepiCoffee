@@ -1,13 +1,54 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
 enum EspressoBasedDrink {
-    LONG_BLACK,
-    CAPPUCINO,
-    FLAT_WHITE,
-    MAGIC_LATTE,
-    CORTADO
+
+
+    LONG_BLACK(1, 4, 3, 0),
+    CAPPUCINO(3, 5, 3, 3),
+    FLAT_WHITE(4, 5, 4, 4),
+    MAGIC_LATTE(5, 5, 5, 5);
+
+
+    private int body;
+
+    private double price;
+    private int sweetness;
+    private int intensityInMilk;
+
+    EspressoBasedDrink(int body, double price, int sweetness, int intensityInMilk) {
+        this.body = body;
+        this.price = price;
+        this.sweetness = sweetness;
+        this.intensityInMilk = intensityInMilk;
+    }
+
+    public int getBody () {
+        return this.body;
+    }
+
+    public double getPrice () {
+        return this.price;
+    }
+
+    public int getSweetness () {
+        return this.sweetness;
+    }
+
+    public int getIntensityInMilk () {
+        return this.intensityInMilk;
+    }
+
+    static final Comparator<EspressoBasedDrink> bodyComparator = Comparator.comparing(EspressoBasedDrink::getBody);
+    static final Comparator<EspressoBasedDrink> priceComparator = Comparator.comparing(EspressoBasedDrink::getPrice);
+    static final Comparator<EspressoBasedDrink> sweetnessComparator = Comparator.comparing(EspressoBasedDrink::getSweetness);
+    static final Comparator<EspressoBasedDrink> intensityInMilkComparator = Comparator.comparing(EspressoBasedDrink::getIntensityInMilk);
+
+
+
 
     // TODO : add prices as enum attributes
 }
@@ -59,19 +100,21 @@ class Barista {
 abstract class CoffeeBean {
 
     RoastLevel roastLevel;
-    String origin; 
+   // String origin; 
     ProcessingMethod processingMethod;
     int altitude; // For example, 2000 MASL
-    Species species;
-    String supplier;
+    //Species species;
+   // String supplier;
+   String varietal;
 
 
-
+   @Override
+   public String toString() {
+    return "CoffeeBean [roastLevel=" + roastLevel + ", processingMethod=" + processingMethod + ", altitude=" + altitude
+            + ", varietal=" + varietal + "]";
+   }
 
     
-    public String toString () {
-        return this.roastLevel + " | Origin: " + this.origin + " | " + this.processingMethod; 
-    }
 }
 
 
@@ -114,8 +157,12 @@ class blendComponent {
 
 class singleOriginBean {
     
+    CoffeeBean coffeeBean;
+    String region;
+    String farm;
+    String producerName;
+    String cropYear;
 
-   // Thinking how it will be different in the main code..
 
 
 }
@@ -152,3 +199,51 @@ class filterBasedOrder extends menuItem {
     
 }
 
+class main {
+
+    public static void main(String[] args) {
+        
+        System.out.println("Welcome to ENTER NAME OF COFFEE SHOP!");
+
+
+        System.out.println("What kind of drink do you want to order?");
+        System.out.println("1. Espresso Based");
+        System.out.println("2. Filter Based");
+        System.out.println("3. Matcha");
+
+        int choice = In.nextInt();
+
+        if (choice == 1) {
+
+        }
+
+
+    }
+
+    public void espressoSubMenu () {
+
+        System.out.println("You grab the menu. What kind of espresso-based drink are you looking for?");
+        System.out.println("1. High Body");
+        System.out.println("2. High sweetness");
+        System.out.println("3. High fruitiness");
+
+
+        int choice = In.nextInt();
+        if (choice == 1) {
+            // sort by body            
+        }
+
+        if (choice == 2) {
+            //sort by sweetness
+        }
+
+        if (choice == 3) {
+            // MAKE FUIRTNESS
+            //SORT 
+        }
+    }
+
+
+
+    
+}
