@@ -119,18 +119,18 @@ enum Species {
 
 
 class CoffeeShop {
-    List<MenuItem> orders = new ArrayList<>();
+    List<EspressoBasedOrder> orders = new ArrayList<>();
 
-    public void addOrder(MenuItem newOrder) {
+    public void addOrder(EspressoBasedOrder newOrder) {
         orders.add(newOrder);
     }
 
-    public void removeOrder(MenuItem oldOrder) {
+    public void removeOrder(EspressoBasedOrder oldOrder) {
         orders.remove(oldOrder);
     }
 
     public void displayOrdersAndPrice() {
-        for (MenuItem order : orders) {
+        for (EspressoBasedOrder order : orders) {
             System.out.println(order);
         }
         System.out.println("Total Price : " + calculateTotalPrice());
@@ -138,14 +138,14 @@ class CoffeeShop {
 
     public double calculateTotalPrice() {
         double total = 0;
-        for (MenuItem order : orders) {
+        for (EspressoBasedOrder order : orders) {
             total += order.getTotalPrice();
         }
         return total;
     }
 
-    public MenuItem findOrder(String orderName) {
-        for (MenuItem order : orders) {
+    public EspressoBasedOrder findOrder(String orderName) {
+        for (EspressoBasedOrder order : orders) {
             if (order.toString().equals(orderName)) {
                 return order;
             }
@@ -174,33 +174,14 @@ class CoffeeShop {
         return filterOrders;
     }
 
-    public List<MenuItem> sortByPrice() {
-        orders.sort(Comparator.comparing(MenuItem::getTotalPrice));
+    public List<EspressoBasedOrder> sortByPrice() {
+        orders.sort(Comparator.comparing(EspressoBasedOrder::getTotalPrice));
         return orders;
     }
 
 }
 
-class SingleOriginBean extends CoffeeBean {
 
-    String farmName;
-    String producerName;
-
-    @Override
-    public String toString() {
-        return "SingleOriginBean [farmName=" + farmName + ", producerName=" + producerName + "]";
-    }
-    SingleOriginBean(String origin, ProcessingMethod processingMethod, int altitude, String farmName, String producerName) {
-        super(origin, processingMethod, altitude);
-        this.farmName = farmName;
-        this.producerName = producerName;
-    }
-    
-
-   
-
-    
-}
 
 
 
@@ -383,6 +364,7 @@ class Main {
 
     public void drinkSubMenu() {
 
+         CoffeeShop shop = new CoffeeShop();
         System.out.println("You grab the menu. What kind of espresso-based drink are you looking for?");
         System.out.println("1. High Body");
         System.out.println("2. High sweetness");
@@ -434,6 +416,23 @@ class Main {
             }
         }
 
+
+        System.out.println("Which drink are you going to choose? Write down the name of the drink.");
+
+        String drinkOrder = In.nextLine().toLowerCase();
+
+        System.out.println("How many to order?");
+
+        int orderQuantity = In.nextInt();
+
+
+        // TODO ask quantitiy, 
+        if (drinkOrder.equals("long black")) {
+            shop.orders.add(new EspressoBasedOrder(EspressoBasedDrink.LONG_BLACK, orderQuantity, EspressoBasedDrink.LONG_BLACK.getPrice(), // TODO bean object!!!!));
+        }
+        else if (drinkOrder.equals("long black")) {
+            shop.orders.add(EspressoBasedDrink.CAPPUCINO);
+        }
         
 
 
