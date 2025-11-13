@@ -190,9 +190,10 @@ class SingleOriginBean extends CoffeeBean {
     public String toString() {
         return "SingleOriginBean [farmName=" + farmName + ", producerName=" + producerName + "]";
     }
-    SingleOriginBean(String origin, ProcessingMethod processingMethod, int altitude) {
+    SingleOriginBean(String origin, ProcessingMethod processingMethod, int altitude, String farmName, String producerName) {
         super(origin, processingMethod, altitude);
-        //TODO Auto-generated constructor stub
+        this.farmName = farmName;
+        this.producerName = producerName;
     }
     
 
@@ -460,6 +461,12 @@ class Main {
         ArrayList<CoffeeBean> selectedBean = allBlends.get(choice - 1);
         System.out.println("You chose: " + selectedBean);
         // display blend components, and their attributes! TODO
+
+        System.out.println("\nThis blend contains:");
+        for (CoffeeBean bean : selectedBean) {
+            System.out.println("- " + bean.origin + " | " + bean.processingMethod + " | " + bean.altitude + " MASL");
+        }
+
 
 
         return selectedBean;
