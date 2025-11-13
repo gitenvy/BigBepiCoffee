@@ -96,12 +96,12 @@ enum FilterBasedDrink implements Drink {
 
 }
 
-enum RoastLevel {
-    LIGHT,
-    MEDIUM,
-    MEDIUM_DARK,
-    DARK
-}
+// enum RoastLevel {
+//     LIGHT,
+//     MEDIUM,
+//     MEDIUM_DARK,
+//     DARK
+// }
 
 
 enum ProcessingMethod {
@@ -111,11 +111,7 @@ enum ProcessingMethod {
     ANAEROBIC_WASHED  
 }
 
-enum Species {
-    ARABICA,
-    ROBUSTA,
-    LIBERICA
-}
+
 
 
 class CoffeeShop {
@@ -182,9 +178,6 @@ class CoffeeShop {
 }
 
 
-
-
-
 class CoffeeBean {
 
     //RoastLevel roastLevel;
@@ -212,17 +205,13 @@ class CoffeeBean {
 class Blend {
 
     List<CoffeeBean> coffeeBlend;
+    String name;
 
 
-    Blend() {
+    Blend(String name) {
         this.coffeeBlend = new ArrayList<>();
+        this.name = name;
     }
-
-
-    
-
-
-
 
 
 }
@@ -234,10 +223,10 @@ class Blend {
 class PresetCoffee {
 
 
-      public ArrayList<ArrayList<CoffeeBean>> initBlends() {
+      public ArrayList<Blend> initBlends() {
 
     //    espressoBlend blend = new espressoBlend();
-    ArrayList<ArrayList<CoffeeBean>> allBlends = new ArrayList<>();
+    ArrayList<Blend> allBlends = new ArrayList<>();
 
         CoffeeBean brazilCerrado = new CoffeeBean("Brazil", ProcessingMethod.NATURAL, 1200);
         CoffeeBean colombiaBruselas = new CoffeeBean("Colombia", ProcessingMethod.WASHED, 1400);
@@ -247,12 +236,12 @@ class PresetCoffee {
         CoffeeBean sumatraKerinci = new CoffeeBean("Indonesia", ProcessingMethod.NATURAL, 1200);
       
 
-        ArrayList<CoffeeBean> peanutButterBlend = new ArrayList<>();
-        peanutButterBlend.add(brazilCerrado);
-        peanutButterBlend.add(sumatraGayoMusara);
-        peanutButterBlend.add(colombiaBruselas);
-   
-        allBlends.add(peanutButterBlend);
+       // ArrayList<CoffeeBean> peanutButterBlend = new ArrayList<>();
+        Blend blend = new Blend("Peanut Butter");
+        blend.coffeeBlend.add(brazilCerrado);
+        blend.coffeeBlend.add(sumatraGayoMusara);
+       blend.coffeeBlend.add(colombiaBruselas);
+        allBlends.add(blend);
             
         
    
@@ -269,12 +258,12 @@ abstract class MenuItem {
 
     int quantity;
     double price;
-    CoffeeBean bean;
+    //CoffeeBean bean;
 
-    MenuItem(int quantity, double price, CoffeeBean bean) {
+    MenuItem(int quantity, double price) {
         this.quantity = quantity;
         this.price = price;
-        this.bean = bean;
+     //   this.bean = bean;
     }   
 
     public double getTotalPrice() {
@@ -289,10 +278,12 @@ abstract class MenuItem {
 class EspressoBasedOrder extends MenuItem {
 
     EspressoBasedDrink espressoBasedOrder;
+    Blend blendChosen;
 
-    EspressoBasedOrder(EspressoBasedDrink espressoBasedOrder, int quantity, double price, CoffeeBean bean) {
-        super(quantity, price, bean);
+    EspressoBasedOrder(EspressoBasedDrink espressoBasedOrder, int quantity, double price, Blend blendChosen) {
+        super(quantity, price);
         this.espressoBasedOrder = espressoBasedOrder;
+        this.blendChosen = blendChosen;
     }
 
     public EspressoBasedDrink getEspressoBasedOrder() {
@@ -311,7 +302,7 @@ class FilterBasedOrder extends MenuItem {
     FilterBasedDrink filterBasedOrder;
 
     FilterBasedOrder(FilterBasedDrink filterBasedOrder,  int quantity, double price, CoffeeBean bean) {
-        super(quantity, price, bean);
+        super(quantity, price);
         this.filterBasedOrder = filterBasedOrder;
     }
 
@@ -341,11 +332,13 @@ class Main {
         System.out.println("4. Remove an Order");
 
         CoffeeShop shop = new CoffeeShop();
+
+        Main main = new Main();
         
         int choice = In.nextInt();
 
         if (choice == 1) {
-            //Run drinkSubMenu(
+            main.drinkSubMenu();
 
         } else if (choice == 2) {
             //Run FBM
@@ -389,7 +382,7 @@ class Main {
             espressoList.sort(EspressoBasedDrink.sweetnessComparator);
 
             for (EspressoBasedDrink drink : espressoList) {
-                System.out.println(drink.name() + " - Sweetness: " + drink.getPrice());
+                System.out.println(drink.name() + " - Sweetness: " + drink.getSweetness());
             }
         }
 
@@ -401,7 +394,7 @@ class Main {
             espressoList.sort(EspressoBasedDrink.acidityComparator);
 
             for (EspressoBasedDrink drink : espressoList) {
-                System.out.println(drink.name() + " Acidity- : " + drink.getPrice());
+                System.out.println(drink.name() + " Acidity- : " + drink.getAcidity());
             }
             
         }
@@ -412,7 +405,7 @@ class Main {
             espressoList.sort(EspressoBasedDrink.bodyComparator);
 
             for (EspressoBasedDrink drink : espressoList) {
-                System.out.println(drink.name() + " - Strength: " + drink.getPrice());
+                System.out.println(drink.name() + " - Strength: " + drink.getBody());
             }
         }
 
@@ -425,44 +418,58 @@ class Main {
 
         int orderQuantity = In.nextInt();
 
+         Main main = new Main();
 
+        Blend blendChosen = main.subMenuChooseBlendBean();
+
+       
         // TODO ask quantitiy, 
         if (drinkOrder.equals("long black")) {
-            shop.orders.add(new EspressoBasedOrder(EspressoBasedDrink.LONG_BLACK, orderQuantity, EspressoBasedDrink.LONG_BLACK.getPrice(), // TODO bean object!!!!));
+            shop.orders.add(new EspressoBasedOrder(EspressoBasedDrink.LONG_BLACK, orderQuantity, EspressoBasedDrink.LONG_BLACK.getPrice(), blendChosen));
         }
-        else if (drinkOrder.equals("long black")) {
-            shop.orders.add(EspressoBasedDrink.CAPPUCINO);
+
+        // TODO probbaly do the same for other orders
+        else if (drinkOrder.equals("cappucino")) {
+            shop.orders.add(new EspressoBasedOrder(EspressoBasedDrink.CAPPUCINO, orderQuantity, EspressoBasedDrink.CAPPUCINO.getPrice(), blendChosen));
         }
+        else if (drinkOrder.equals("flat white")) {
+            shop.orders.add(new EspressoBasedOrder(EspressoBasedDrink.FLAT_WHITE, orderQuantity, EspressoBasedDrink.FLAT_WHITE.getPrice(), blendChosen));
+        }
+        else if (drinkOrder.equals("magic latte")) {
+            shop.orders.add(new EspressoBasedOrder(EspressoBasedDrink.MAGIC_LATTE, orderQuantity, EspressoBasedDrink.MAGIC_LATTE.getPrice(), blendChosen));
+        }
+
+
         
 
 
 
     }
 
-    public ArrayList<CoffeeBean> subMenuChooseBlendBean () {
+    public Blend subMenuChooseBlendBean () {
         PresetCoffee preset = new PresetCoffee();
-        ArrayList<ArrayList<CoffeeBean>> allBlends = preset.initBlends();
+        ArrayList<Blend> allBlends = preset.initBlends();
 
         System.out.println("\nChoose your coffee blend:");
         int index = 1;
 
   
-        for (ArrayList<CoffeeBean> blend : allBlends) {
-            for (CoffeeBean bean : blend) {
-                System.out.println(index + ". " + bean.origin + " " + bean.processingMethod + " " + bean.altitude + " MASL)");
+        for (Blend blend : allBlends) {
+            
+                System.out.println(index + ". " + blend.name);
                 index++;
-            }
+            
         }
 
         int choice = In.nextInt();
 
     // if choice out of bound do smth TODO
-        ArrayList<CoffeeBean> selectedBean = allBlends.get(choice - 1);
-        System.out.println("You chose: " + selectedBean);
+        Blend selectedBean = allBlends.get(choice - 1);
+        System.out.println("You chose: " + selectedBean.name);
         // display blend components, and their attributes! TODO
 
         System.out.println("\nThis blend contains:");
-        for (CoffeeBean bean : selectedBean) {
+        for (CoffeeBean bean : selectedBean.coffeeBlend) {
             System.out.println("- " + bean.origin + " | " + bean.processingMethod + " | " + bean.altitude + " MASL");
         }
 
