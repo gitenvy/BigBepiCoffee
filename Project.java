@@ -13,22 +13,24 @@ interface Drink {
 enum EspressoBasedDrink implements Drink {
 
 
-    LONG_BLACK(1, 4, 3, 0),
-    CAPPUCINO(3, 5, 3, 3),
-    FLAT_WHITE(4, 5, 4, 4),
-    MAGIC_LATTE(5, 5, 5, 5);
+    LONG_BLACK(1, 4, 3, 0, 5),
+    CAPPUCINO(3, 5, 3, 3, 2),
+    FLAT_WHITE(4, 5, 4, 4, 3),
+    MAGIC_LATTE(5, 5, 5, 5, 5);
 
 
     private int body;
     private double price;
     private int sweetness;
     private int intensityInMilk;
+    private int acidity;
 
-    EspressoBasedDrink(int body, double price, int sweetness, int intensityInMilk) {
+    EspressoBasedDrink(int body, double price, int sweetness, int intensityInMilk, int acidity) {
         this.body = body;
         this.price = price;
         this.sweetness = sweetness;
         this.intensityInMilk = intensityInMilk;
+        this.acidity = acidity;
     }
 
     public int getBody () {
@@ -49,11 +51,15 @@ enum EspressoBasedDrink implements Drink {
         return this.intensityInMilk;
     }
 
+    public int getAcidity () {
+        return this.acidity;
+    }
+
     static final Comparator<EspressoBasedDrink> bodyComparator = Comparator.comparing(EspressoBasedDrink::getBody);
     static final Comparator<EspressoBasedDrink> priceComparator = Comparator.comparing(EspressoBasedDrink::getPrice);
     static final Comparator<EspressoBasedDrink> sweetnessComparator = Comparator.comparing(EspressoBasedDrink::getSweetness);
     static final Comparator<EspressoBasedDrink> intensityInMilkComparator = Comparator.comparing(EspressoBasedDrink::getIntensityInMilk);
-
+    static final Comparator<EspressoBasedDrink> acidityComparator = Comparator.comparing(EspressoBasedDrink::getAcidity);
 
 
 
@@ -174,6 +180,27 @@ class CoffeeShop {
     }
 
 }
+
+class SingleOriginBean extends CoffeeBean {
+
+    String farmName;
+    String producerName;
+
+    @Override
+    public String toString() {
+        return "SingleOriginBean [farmName=" + farmName + ", producerName=" + producerName + "]";
+    }
+    SingleOriginBean(String origin, ProcessingMethod processingMethod, int altitude) {
+        super(origin, processingMethod, altitude);
+        //TODO Auto-generated constructor stub
+    }
+    
+
+   
+
+    
+}
+
 
 
 class CoffeeBean {
@@ -336,7 +363,7 @@ class Main {
         int choice = In.nextInt();
 
         if (choice == 1) {
-            //Run espressosubMenu
+            //Run drinkSubMenu(
 
         } else if (choice == 2) {
             //Run FBM
@@ -353,12 +380,12 @@ class Main {
 
     }
 
-    public void espressoSubMenu() {
+    public void drinkSubMenu() {
 
         System.out.println("You grab the menu. What kind of espresso-based drink are you looking for?");
         System.out.println("1. High Body");
         System.out.println("2. High sweetness");
-      //  System.out.println("3. High fruitiness");
+        System.out.println("3. High fruitiness");
 
 
         int choice = In.nextInt();
@@ -375,16 +402,66 @@ class Main {
         }
         if (choice == 2) {
             //sort by sweetness
+             List<EspressoBasedDrink> espressoList = new ArrayList<>(List.of(EspressoBasedDrink.values()));
+            espressoList.sort(EspressoBasedDrink.sweetnessComparator);
+
+            for (EspressoBasedDrink drink : espressoList) {
+                System.out.println(drink.name() + " - Sweetness: " + drink.getPrice());
+            }
         }
 
         if (choice == 3) {
-            // MAKE FUIRTNESS
-            //SORT 
+
+
+
+              List<EspressoBasedDrink> espressoList = new ArrayList<>(List.of(EspressoBasedDrink.values()));
+            espressoList.sort(EspressoBasedDrink.acidityComparator);
+
+            for (EspressoBasedDrink drink : espressoList) {
+                System.out.println(drink.name() + " Acidity- : " + drink.getPrice());
+            }
+            
+        }
+
+        if (choice == 4) {
+
+              List<EspressoBasedDrink> espressoList = new ArrayList<>(List.of(EspressoBasedDrink.values()));
+            espressoList.sort(EspressoBasedDrink.bodyComparator);
+
+            for (EspressoBasedDrink drink : espressoList) {
+                System.out.println(drink.name() + " - Strength: " + drink.getPrice());
+            }
         }
 
         
 
 
 
+    }
+
+    public ArrayList<CoffeeBean> subMenuChooseBlendBean () {
+        PresetCoffee preset = new PresetCoffee();
+        ArrayList<ArrayList<CoffeeBean>> allBlends = preset.initBlends();
+
+        System.out.println("\nChoose your coffee blend:");
+        int index = 1;
+
+  
+        for (ArrayList<CoffeeBean> blend : allBlends) {
+            for (CoffeeBean bean : blend) {
+                System.out.println(index + ". " + bean.origin + " " + bean.processingMethod + " " + bean.altitude + " MASL)");
+                index++;
+            }
+        }
+
+        int choice = In.nextInt();
+
+    // if choice out of bound do smth TODO
+        ArrayList<CoffeeBean> selectedBean = allBlends.get(choice - 1);
+        System.out.println("You chose: " + selectedBean);
+        // display blend components, and their attributes! TODO
+
+
+        return selectedBean;
     }
 }
