@@ -110,23 +110,23 @@ enum ProcessingMethod {
 
 
 class CoffeeShop {
-    private List<MenuItem> orders = new ArrayList<>();
+    private List<CoffeeMenuItem> orders = new ArrayList<>();
 
-    public List<MenuItem> getOrders() {
+    public List<CoffeeMenuItem> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<MenuItem> orders) {
+    public void setOrders(List<CoffeeMenuItem> orders) {
         this.orders = orders;
     }
 
-    public void addOrder(MenuItem newOrder) {
+    public void addOrder(CoffeeMenuItem newOrder) {
         orders.add(newOrder);
     }
 
     public void removeOrder(String orderName) {
-        MenuItem orderToRemove = null;
-        for (MenuItem order : orders) {
+        CoffeeMenuItem orderToRemove = null;
+        for (CoffeeMenuItem order : orders) {
             if (order.getName().equalsIgnoreCase(orderName)) {
                 orderToRemove = order;
                 break;
@@ -141,7 +141,7 @@ class CoffeeShop {
     }
 
     public void displayOrdersAndPrice() {
-        for (MenuItem order : orders) {
+        for (CoffeeMenuItem order : orders) {
             System.out.println(order);
         }
         if (orders.isEmpty()) {
@@ -153,14 +153,14 @@ class CoffeeShop {
 
     public double calculateTotalPrice() {
         double total = 0;
-        for (MenuItem order : orders) {
+        for (CoffeeMenuItem order : orders) {
             total += order.getTotalPrice();
         }
         return total;
     }
 
-    public MenuItem findOrder(String orderName) {
-        for (MenuItem order : orders) {
+    public CoffeeMenuItem findOrder(String orderName) {
+        for (CoffeeMenuItem order : orders) {
             if (order.getName().equalsIgnoreCase(orderName)) {
                 return order;
             }
@@ -168,8 +168,8 @@ class CoffeeShop {
         return null;
     }
 
-    public MenuItem findOrder(int quantity) {
-        for (MenuItem order : orders) {
+    public CoffeeMenuItem findOrder(int quantity) {
+        for (CoffeeMenuItem order : orders) {
             if (order.getQuantity() == quantity) {
                 return order;
             }
@@ -181,7 +181,7 @@ class CoffeeShop {
     public List<EspressoBasedOrder> getEspressoBasedOrders() {
         List<EspressoBasedOrder> espressoOrders = new ArrayList<>();
 
-        for (MenuItem order : orders) {
+        for (CoffeeMenuItem order : orders) {
             if (order instanceof EspressoBasedOrder) {
                 espressoOrders.add((EspressoBasedOrder) order);
             }
@@ -195,7 +195,7 @@ class CoffeeShop {
 
     public List<FilterBasedOrder> getFilterBasedOrders() {
         List<FilterBasedOrder> filterOrders = new ArrayList<>();
-        for (MenuItem order : orders) {
+        for (CoffeeMenuItem order : orders) {
             if (order instanceof FilterBasedOrder) {
                 filterOrders.add((FilterBasedOrder) order);
             } 
@@ -206,8 +206,8 @@ class CoffeeShop {
         return filterOrders;
     }
 
-    public List<MenuItem> sortByPrice() {
-        orders.sort(Comparator.comparing(MenuItem::getTotalPrice));
+    public List<CoffeeMenuItem> sortByPrice() {
+        orders.sort(Comparator.comparing(CoffeeMenuItem::getTotalPrice));
         return orders;
     }
 
@@ -362,13 +362,15 @@ class PresetCoffee {
 }
 
 
-abstract class MenuItem {
+abstract class CoffeeMenuItem {
 
   
-// TODO VIEW ALL MENU
+
     protected String name;
     protected int quantity;
     protected double price;
+	protected Blend blendChosen;
+
     public int getQuantity() {
         return quantity;
     }
@@ -389,10 +391,11 @@ abstract class MenuItem {
    
 
 
-    MenuItem(String name, int quantity, double price) {
+    CoffeeMenuItem(String name, int quantity, double price, Blend blendChosen) {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
+		this.blendChosen = blendChosen;
     }   
 
     public double getTotalPrice() {
@@ -406,21 +409,24 @@ abstract class MenuItem {
         this.name = name;
     }
 
+    public Blend getBlend() {
+        return this.blendChosen;
+    }
+
     public abstract String toString();
 }
 
 
 
 
-class EspressoBasedOrder extends MenuItem {
+class EspressoBasedOrder extends CoffeeMenuItem {
 
     private EspressoBasedDrink espressoBasedOrder;
-    private Blend blendChosen;
-
+   
     EspressoBasedOrder(String name, EspressoBasedDrink espressoBasedOrder, int quantity, double price, Blend blendChosen) {
-        super(name, quantity, price);
+        super(name, quantity, price, blendChosen);
         this.espressoBasedOrder = espressoBasedOrder;
-        this.blendChosen = blendChosen;
+      //  this.blendChosen = blendChosen;
     }
 
     public EspressoBasedDrink getEspressoBasedOrder() {
@@ -430,6 +436,10 @@ class EspressoBasedOrder extends MenuItem {
     @Override
     public double getTotalPrice() {
         return super.getTotalPrice();
+    }
+
+    public Blend getBlend() {
+        return super.getBlend();
     }
 
     @Override
@@ -445,16 +455,16 @@ class EspressoBasedOrder extends MenuItem {
 
 }
 
-class FilterBasedOrder extends MenuItem {
+class FilterBasedOrder extends CoffeeMenuItem {
 
     FilterBasedDrink filterBasedOrder;
-    Blend blendChosen;
+    //Blend blendChosen;
     
 
     FilterBasedOrder(String name, FilterBasedDrink filterBasedOrder,  int quantity, double price, Blend blendChosen) {
-        super(name, quantity, price);
+        super(name, quantity, price, blendChosen);
         this.filterBasedOrder = filterBasedOrder;
-        this.blendChosen = blendChosen;
+     //   this.blendChosen = blendChosen;
     }
 
     public FilterBasedDrink getFilterBasedOrder() {
@@ -470,6 +480,11 @@ class FilterBasedOrder extends MenuItem {
     public String getName() {
         return this.name;
     }
+
+    public Blend getBlend() {
+        return super.getBlend();
+    }
+
 
     @Override
     public String toString() {
@@ -537,7 +552,7 @@ class Main {
         } else if (choice == 6) {
             System.out.println("Enter the name of the order to find:");
             String orderName = In.nextLine();
-            MenuItem foundOrder = shop.findOrder(orderName);
+            CoffeeMenuItem foundOrder = shop.findOrder(orderName);
             if (foundOrder != null) {
                 System.out.println("Order Found - " + foundOrder);
             } else {
@@ -548,7 +563,7 @@ class Main {
         } else if (choice == 7) {
             System.out.println("Enter the quantity of the order to find:");
             int quantity = In.nextInt();
-            MenuItem foundOrder = shop.findOrder(quantity);
+            CoffeeMenuItem foundOrder = shop.findOrder(quantity);
             if (foundOrder != null) {
                 System.out.println("Order Found - " + foundOrder);
             } else {
