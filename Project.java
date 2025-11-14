@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -61,9 +62,6 @@ enum EspressoBasedDrink implements Drink {
     static final Comparator<EspressoBasedDrink> intensityInMilkComparator = Comparator.comparing(EspressoBasedDrink::getIntensityInMilk);
     static final Comparator<EspressoBasedDrink> acidityComparator = Comparator.comparing(EspressoBasedDrink::getAcidity);
 
-
-    // TODO sort by most milky
-   
 }
 
 enum FilterBasedDrink implements Drink {
@@ -106,7 +104,6 @@ enum ProcessingMethod {
     WASHED,
     NATURAL,
     ANAEROBIC_NATURAL,
-    ANAEROBIC_WASHED  
 }
 
 
@@ -150,7 +147,7 @@ class CoffeeShop {
         if (orders.isEmpty()) {
             System.out.println("No orders placed yet.");
         } else {
-        System.out.println("Total Price : " + calculateTotalPrice());
+        System.out.println("Total Price : $" + calculateTotalPrice());
         }
     }
 
@@ -179,6 +176,7 @@ class CoffeeShop {
         }
         return null;
     }
+    
 
     public List<EspressoBasedOrder> getEspressoBasedOrders() {
         List<EspressoBasedOrder> espressoOrders = new ArrayList<>();
@@ -213,15 +211,35 @@ class CoffeeShop {
         return orders;
     }
 
+    public void viewWholeMenu() {
+        List<EspressoBasedDrink> espressoMenu = Arrays.asList(EspressoBasedDrink.values());
+        List<FilterBasedDrink> filterMenu = Arrays.asList(FilterBasedDrink.values());
+
+    	System.out.println("---------- Espresso Menu -----------");
+    	System.out.println("---------------------------");
+        for(EspressoBasedDrink espressoItem : espressoMenu) {
+        	System.out.println(espressoItem.name() + " | Price: $" + espressoItem.getPrice());
+        }
+
+		System.out.println("---------- Filter Menu -----------");
+    	System.out.println("---------------------------");
+
+        for(FilterBasedDrink filterItem : filterMenu) {
+        	System.out.println(filterItem.name() + " | Price: $" + filterItem.getPrice());
+       	}
+		System.out.println("\n\n");
+    }
+
+	
+
 }
 
 
 class CoffeeBean {
 
-    //RoastLevel roastLevel;
     private String origin;
     ProcessingMethod processingMethod;
-    private int altitude; // For example, 2000 MASL
+    private int altitude; 
 
     public int getAltitude() {
         return altitude;
@@ -241,11 +259,10 @@ class CoffeeBean {
 
     CoffeeBean(String origin, ProcessingMethod processingMethod, int altitude) {
         this.origin =  origin;
-      //  this.roastLevel = roastLevel;
         this.processingMethod = processingMethod;
         this.altitude = altitude;
-    //    this.varietal = varietal;
     }
+
 
    @Override
    public String toString() {
@@ -348,7 +365,7 @@ class PresetCoffee {
 abstract class MenuItem {
 
   
-
+// TODO VIEW ALL MENU
     protected String name;
     protected int quantity;
     protected double price;
@@ -417,7 +434,7 @@ class EspressoBasedOrder extends MenuItem {
 
     @Override
     public String getName() {
-        return this.getName();
+        return super.getName();
     }
 
     @Override
@@ -478,39 +495,46 @@ class Main {
         
       
         System.out.println("What would you like to do?");
-        System.out.println("1. View Espresso Based Menu");
-        System.out.println("2. View Filter Based Menu");
-        System.out.println("3. View Orders");
-        System.out.println("4. Remove an Order");
-        System.out.println("5. Find a Specific Order by Name");
-        System.out.println("6. Find your Orders by Quantity");
-        System.out.println("7. View Espresso Based Orders");
-        System.out.println("8. View Filter Based Orders");
-        System.out.println("9. Checkout and Pay (Exit)");
+        System.out.println("1. View Whole Menu");
+        System.out.println("2. View Espresso Based Menu");
+        System.out.println("3. View Filter Based Menu");
+        System.out.println("4. View Orders");
+        System.out.println("5. Remove an Order");
+        System.out.println("6. Find a Specific Order by Name");
+        System.out.println("7. Find your Orders by Quantity");
+        System.out.println("8. View Espresso Based Orders");
+        System.out.println("9. View Filter Based Orders");
+        System.out.println("10. Checkout and Pay (Exit)");
+        
         System.out.println("Please enter the number of your choice: ");
         System.out.println("---------------------");
         System.out.println("\n");
         int choice = In.nextInt();
 
         if (choice == 1) {
+            shop.viewWholeMenu();
+        }
+
+
+        if (choice == 2) {
             main.espressoSubMenu(shop);
             continue;
 
-        } else if (choice == 2) {
+        } else if (choice == 3) {
             main.filterBasedSubMenu(shop);
             continue;
 
-        } else if (choice == 3) {
+        } else if (choice == 4) {
             shop.displayOrdersAndPrice();
             continue;
         
-        } else if (choice == 4) {
+        } else if (choice == 5) {
             System.out.println("Enter the name of the order to remove:");
             String orderName = In.nextLine();
             shop.removeOrder(orderName);
             continue;
 
-        } else if (choice == 5) {
+        } else if (choice == 6) {
             System.out.println("Enter the name of the order to find:");
             String orderName = In.nextLine();
             MenuItem foundOrder = shop.findOrder(orderName);
@@ -521,7 +545,7 @@ class Main {
             }
             continue;
 
-        } else if (choice == 6) {
+        } else if (choice == 7) {
             System.out.println("Enter the quantity of the order to find:");
             int quantity = In.nextInt();
             MenuItem foundOrder = shop.findOrder(quantity);
@@ -532,25 +556,32 @@ class Main {
             }
             continue;
 
-        } else if (choice == 7) {
+        } else if (choice == 8) {
             List<EspressoBasedOrder> espressoOrders = shop.getEspressoBasedOrders();
             for (EspressoBasedOrder order : espressoOrders) {
                 System.out.println(order);
             }
 
-        } else if (choice == 8) {
+        } else if (choice == 9) {
             List<FilterBasedOrder> filterOrders = shop.getFilterBasedOrders();
             for (FilterBasedOrder order : filterOrders) {
                 System.out.println(order);
             }
 
-        } else if (choice == 9) {
+        } else if (choice == 10) {
             double totalPrice = shop.calculateTotalPrice();
             System.out.println("Your total price is: $" + totalPrice);
             System.out.println("Thank you for visiting THE Coffee Shop!");
             break;
 
-        } else {
+
+
+        }
+      
+        
+        
+        
+        else if (choice > 10) {
             System.out.println("Invalid choice. Please try again.");
         }
 
