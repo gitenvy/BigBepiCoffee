@@ -20,11 +20,11 @@ enum EspressoBasedDrink implements Drink {
     MAGIC_LATTE(5, 6, 5, 5, 5);
 
 
-    private int body;
-    private double price;
-    private int sweetness;
-    private int intensityInMilk;
-    private int acidity;
+    final private int body;
+    final private double price;
+    final private int sweetness;
+    final private int intensityInMilk;
+    final private int acidity;
 
     EspressoBasedDrink(int body, double price, int sweetness, int intensityInMilk, int acidity) {
         this.body = body;
@@ -334,7 +334,6 @@ class PresetCoffee {
         CoffeeBean brazilAltoCaparao = new CoffeeBean("Brazil", ProcessingMethod.NATURAL, 1100);
       
 
-       // ArrayList<CoffeeBean> peanutButterBlend = new ArrayList<>();
         Blend peanutBlend = new Blend("Peanut Butter", "Chocolatey and Caramelly");
         peanutBlend.coffeeBlend.add(brazilCerrado);
         peanutBlend.coffeeBlend.add(sumatraGayoMusara);
@@ -426,7 +425,7 @@ class EspressoBasedOrder extends CoffeeMenuItem {
     EspressoBasedOrder(String name, EspressoBasedDrink espressoBasedOrder, int quantity, double price, Blend blendChosen) {
         super(name, quantity, price, blendChosen);
         this.espressoBasedOrder = espressoBasedOrder;
-      //  this.blendChosen = blendChosen;
+   
     }
 
     public EspressoBasedDrink getEspressoBasedOrder() {
@@ -458,13 +457,13 @@ class EspressoBasedOrder extends CoffeeMenuItem {
 class FilterBasedOrder extends CoffeeMenuItem {
 
     FilterBasedDrink filterBasedOrder;
-    //Blend blendChosen;
+ 
     
 
     FilterBasedOrder(String name, FilterBasedDrink filterBasedOrder,  int quantity, double price, Blend blendChosen) {
         super(name, quantity, price, blendChosen);
         this.filterBasedOrder = filterBasedOrder;
-     //   this.blendChosen = blendChosen;
+    
     }
 
     public FilterBasedDrink getFilterBasedOrder() {
@@ -496,12 +495,12 @@ class FilterBasedOrder extends CoffeeMenuItem {
 
 
 
-class Main {
+class MainMenu {
 
     public static void main(String[] args) {
 
         CoffeeShop shop = new CoffeeShop();
-        Main main = new Main();
+        MainMenu main = new MainMenu();
 
         System.out.println("Welcome to the Coffee Shop!");
 
@@ -511,8 +510,8 @@ class Main {
       
         System.out.println("What would you like to do?");
         System.out.println("1. View Whole Menu");
-        System.out.println("2. View Espresso Based Menu");
-        System.out.println("3. View Filter Based Menu");
+        System.out.println("2. Buy Espresso Based Item");
+        System.out.println("3. Buy Filter Based Item");
         System.out.println("4. View Orders");
         System.out.println("5. Remove an Order");
         System.out.println("6. Find a Specific Order by Name");
@@ -520,6 +519,7 @@ class Main {
         System.out.println("8. View Espresso Based Orders");
         System.out.println("9. View Filter Based Orders");
         System.out.println("10. Checkout and Pay (Exit)");
+        System.out.println("\n");
         
         System.out.println("Please enter the number of your choice: ");
         System.out.println("---------------------");
@@ -530,8 +530,7 @@ class Main {
             shop.viewWholeMenu();
         }
 
-
-        if (choice == 2) {
+        else if (choice == 2) {
             main.espressoSubMenu(shop);
             continue;
 
@@ -586,7 +585,7 @@ class Main {
         } else if (choice == 10) {
             double totalPrice = shop.calculateTotalPrice();
             System.out.println("Your total price is: $" + totalPrice);
-            System.out.println("Thank you for visiting THE Coffee Shop!");
+            System.out.println("Thank you for visiting!");
             break;
 
 
@@ -710,7 +709,7 @@ class Main {
         PresetCoffee preset = new PresetCoffee();
         ArrayList<Blend> allBlends = preset.initBlends();
 
-        System.out.println("Choose your coffee blend:");
+        System.out.println("Choose your coffee blend:\n Write down the number you want to pick.");
         int index = 1;
 
   
@@ -724,7 +723,7 @@ class Main {
         int choice = In.nextInt();
         System.out.println("\n");
 
-    // if choice out of bound do smth TODO
+   
         Blend selectedBlend = allBlends.get(choice - 1);
         System.out.println("You chose: " + selectedBlend.getName());
       
@@ -735,7 +734,7 @@ class Main {
         }
 
         System.out.println("\n");
-        System.out.println("\n");
+        
 
 
 
