@@ -1,3 +1,17 @@
 {
-    "java.debug.settings.onBuildFailureProceed": true
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\bepi\\Desktop\\IPRO002\\SDKs\\javafx-sdk-25.0.1\\lib\\javafx.base.jar",
+        "c:\\Users\\bepi\\Desktop\\IPRO002\\SDKs\\javafx-sdk-25.0.1\\lib\\javafx.controls.jar",
+        "c:\\Users\\bepi\\Desktop\\IPRO002\\SDKs\\javafx-sdk-25.0.1\\lib\\javafx.fxml.jar",
+        "c:\\Users\\bepi\\Desktop\\IPRO002\\SDKs\\javafx-sdk-25.0.1\\lib\\javafx.graphics.jar",
+        "c:\\Users\\bepi\\Desktop\\IPRO002\\SDKs\\javafx-sdk-25.0.1\\lib\\javafx.media.jar",
+        "c:\\Users\\bepi\\Desktop\\IPRO002\\SDKs\\javafx-sdk-25.0.1\\lib\\javafx.swing.jar",
+        "c:\\Users\\bepi\\Desktop\\IPRO002\\SDKs\\javafx-sdk-25.0.1\\lib\\javafx.web.jar",
+        "c:\\Users\\bepi\\Desktop\\IPRO002\\SDKs\\javafx-sdk-25.0.1\\lib\\javafx-swt.jar",
+        "c:\\Users\\bepi\\Desktop\\IPRO002\\SDKs\\javafx-sdk-25.0.1\\lib\\jdk.jsobject.jar",
+        "c:\\Users\\bepi\\Desktop\\IPRO002\\SDKs\\javafx-sdk-25.0.1\\lib\\jfx.incubator.input.jar",
+        "c:\\Users\\bepi\\Desktop\\IPRO002\\SDKs\\javafx-sdk-25.0.1\\lib\\jfx.incubator.richtext.jar"
+    ]
 }
