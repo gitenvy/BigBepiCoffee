@@ -11,7 +11,7 @@ public class ProjectMVC extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Coffee Shop");
         ProjectModel model = new ProjectModel();
-        ProjectController controller = new ProjectController(model);
+        ProjectController controller = new ProjectController(model, primaryStage);
         ProjectView view = new ProjectView(controller, model, primaryStage);
 
         Scene scene = new Scene(view.asParent(), 600, 300);

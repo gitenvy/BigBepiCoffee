@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -35,6 +36,7 @@ public class ProjectView {
     private Button btnViewEspressoOrders;
     private Button btnViewFilterOrders;
     private Button btnCheckout;
+    private ListView<Drink> listView;
 
 
     public ProjectView (ProjectController controller, ProjectModel model, Stage primaryStage) {
@@ -65,8 +67,13 @@ public class ProjectView {
 
 
     private void createAndLayoutControls () {
+        
 
         this.viewWholeMenuButton = new Button("View the whole menu");
+
+        viewWholeMenuButton.setOnAction(event -> controller.menuWindow()); // execute sub window
+        // TODO modality is broken
+
         this.btnBuyEspressoItem = new Button("Buy Espresso-based Item");
         this.btnBuyFilterItem = new Button("Buy Fiter-based Item");
         this.btnViewOrders = new Button("View orders");
@@ -98,6 +105,10 @@ public class ProjectView {
 
         vbox = new VBox(5);
         vbox.setAlignment(Pos.CENTER);
+        ListView<Drink> menuList = new ListView<>();
+        vbox.getChildren().addAll(menuList);
+        // TODO create a seperate menulis windows, should not be in vbox.
+    
 
     }
 
