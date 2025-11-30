@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Comparator;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -13,6 +14,9 @@ public class ProjectModel {
     ObservableList<FilterBasedDrink> filterMenu;
     ObservableList<Drink> fullMenu;
     ObservableList<CoffeeMenuItem> orders;
+    PresetCoffee preset = new PresetCoffee();
+    ArrayList<Blend> allBlends = preset.initBlends();
+
     
     
 
@@ -45,6 +49,13 @@ public class ProjectModel {
     public ObservableList getMenu() {
 
         return fullMenu;
+
+    }
+
+    public Blend getPeanutButterBlendObject() {
+        
+        return allBlends.get(0);
+
 
     }
 
@@ -205,6 +216,8 @@ enum EspressoBasedDrink implements Drink {
     public int getAcidity () {
         return this.acidity;
     }
+
+   
 
     static final Comparator<EspressoBasedDrink> bodyComparator = Comparator.comparing(EspressoBasedDrink::getBody);
     static final Comparator<EspressoBasedDrink> priceComparator = Comparator.comparing(EspressoBasedDrink::getPrice);
@@ -379,6 +392,51 @@ class FilterBasedOrder extends CoffeeMenuItem {
     @Override
     public String toString() {
         return "Order: " + filterBasedOrder.name() + ", Quantity: " + quantity + ", Blend: " + blendChosen.getName() + ", Total Price: $" + getTotalPrice();
+    }
+
+}
+
+
+class PresetCoffee {
+
+
+    public ArrayList<Blend> initBlends() {
+
+    //    espressoBlend blend = new espressoBlend();
+    ArrayList<Blend> allBlends = new ArrayList<>();
+
+        CoffeeBean brazilCerrado = new CoffeeBean("Brazil", ProcessingMethod.NATURAL, 1200);
+        CoffeeBean colombiaBruselas = new CoffeeBean("Colombia", ProcessingMethod.WASHED, 1400);
+        CoffeeBean colombiaWushWush = new CoffeeBean("Colombia", ProcessingMethod.ANAEROBIC_NATURAL, 2000);
+        CoffeeBean sumatraGayoMusara = new CoffeeBean("Indonesia", ProcessingMethod.WASHED, 1400);
+        CoffeeBean javaLoa = new CoffeeBean("Indonesia", ProcessingMethod.ANAEROBIC_NATURAL, 1700);
+        CoffeeBean sumatraKerinci = new CoffeeBean("Indonesia", ProcessingMethod.NATURAL, 1200);
+        CoffeeBean javaFloresManggarai = new CoffeeBean("Indonesia", ProcessingMethod.WASHED, 1500);
+        CoffeeBean brazilAltoCaparao = new CoffeeBean("Brazil", ProcessingMethod.NATURAL, 1100);
+      
+
+        Blend peanutBlend = new Blend("Peanut Butter", "Chocolatey and Caramelly");
+        peanutBlend.coffeeBlend.add(brazilCerrado);
+        peanutBlend.coffeeBlend.add(sumatraGayoMusara);
+        peanutBlend.coffeeBlend.add(colombiaBruselas);
+        allBlends.add(peanutBlend);
+
+
+        Blend berryBlend = new Blend("Berry Bomb", "Juicy and Fruity");
+        berryBlend.coffeeBlend.add(sumatraKerinci);
+        berryBlend.coffeeBlend.add(javaLoa);
+        berryBlend.coffeeBlend.add(colombiaWushWush);
+        allBlends.add(berryBlend);
+
+        Blend caramellyBlend = new Blend("Tropical Punch", "Full of tropical fruits");
+        caramellyBlend.coffeeBlend.add(brazilAltoCaparao);
+        caramellyBlend.coffeeBlend.add(javaFloresManggarai);
+        allBlends.add(caramellyBlend);
+   
+
+        return allBlends;
+
+
     }
 
 }

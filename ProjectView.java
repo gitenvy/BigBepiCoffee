@@ -110,14 +110,21 @@ public class ProjectView {
 
       
 
+        Button peanutButterBlendBtn = new Button("Peanut Butter");
+        peanutButterBlendBtn.setOnAction(event -> {
+            controller.getBlend(0);
+        });
         
+
+        HBox blendRow = new HBox(5, new Label("Choose a blend: "),peanutButterBlendBtn);
+        // TODO add blending stuff
 
         TextField qtyField = new TextField();
 
         HBox qtyOrderRow = new HBox(5, new Label("How many to order?"), qtyField);
       //  Integer orderQuantity = Integer.valueOf(qtyField.getText());
         // TODO idk???
-        Button addItemBtn = new Button();
+        Button addItemBtn = new Button("Add Item");
         addItemBtn.setOnAction(event -> {
              Drink selected = menuList.getSelectionModel().getSelectedItem();
 
@@ -140,15 +147,9 @@ public class ProjectView {
     
         });
 
-        // Button peanutButterBlendBtn = new Button();
-        // peanutButterBlendBtn.setOnAction(event -> {
-            
-       // });
-
-      //  HBox blendRow = new HBox(5, peanutButterBlendBtn);
-        // TODO add blending stuff
         
-        VBox menuVbox = new VBox(10, menuList, qtyOrderRow, addItemBtn);
+        
+        VBox menuVbox = new VBox(10, menuList, qtyOrderRow, addItemBtn, blendRow);
 
 
 

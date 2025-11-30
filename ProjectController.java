@@ -26,6 +26,15 @@ public class ProjectController {
 
     }
 
+    public Blend getBlend(int choice) {
+        if (choice == 0) {
+            return model.getPeanutButterBlendObject();
+        }
+
+        
+        return null;
+    }
+
     
     
     
