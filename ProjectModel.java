@@ -12,7 +12,18 @@ public class ProjectModel {
     ObservableList<EspressoBasedDrink> espressoMenu;
     ObservableList<FilterBasedDrink> filterMenu;
     ObservableList<Drink> fullMenu;
+    ObservableList<CoffeeMenuItem> orders;
     
+    
+
+    
+        //orders.add(new CoffeeMenuItem(menuItem.name, menuItem.quantity, menuItem.price, menuItem.blendChosen));
+        // get the details...
+
+    public void addEspressoOrder(EspressoBasedDrink drink, int qty, Blend blend) {
+        EspressoBasedOrder order = new EspressoBasedOrder(drink.name(),drink,qty, drink.getPrice(), blend);
+        orders.add(order);
+    }
     
     ProjectModel() {
         this.espressoMenu = FXCollections.observableArrayList(EspressoBasedDrink.values());
@@ -237,5 +248,137 @@ enum FilterBasedDrink implements Drink {
     static final Comparator<FilterBasedDrink> priceComparator = Comparator.comparing(FilterBasedDrink::getPrice);
     static final Comparator<FilterBasedDrink> sweetnessComparator = Comparator.comparing(FilterBasedDrink::getSweetness);
     static final Comparator<FilterBasedDrink> clarityComparator = Comparator.comparing(FilterBasedDrink::getClarity);
+
+}
+
+
+abstract class CoffeeMenuItem {
+
+  
+
+    protected String name;
+    protected int quantity;
+    protected double price;
+	protected Blend blendChosen;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+   
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+   
+
+
+    CoffeeMenuItem(String name, int quantity, double price, Blend blendChosen) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+		this.blendChosen = blendChosen;
+    }   
+
+    public double getTotalPrice() {
+        return quantity * price;
+    }
+
+    public String getName() {
+        return this.name;
+    }  
+      public void setName(String name) {
+        this.name = name;
+    }
+
+    public Blend getBlend() {
+        return this.blendChosen;
+    }
+
+    public abstract String toString();
+}
+
+
+
+
+class EspressoBasedOrder extends CoffeeMenuItem {
+
+    private EspressoBasedDrink espressoBasedOrder;
+   
+    EspressoBasedOrder(String name, EspressoBasedDrink espressoBasedOrder, int quantity, double price, Blend blendChosen) {
+        super(name, quantity, price, blendChosen);
+        this.espressoBasedOrder = espressoBasedOrder;
+   
+    }
+
+    public EspressoBasedDrink getEspressoBasedOrder() {
+        return this.espressoBasedOrder;
+    }
+
+    @Override
+    public double getTotalPrice() {
+        return super.getTotalPrice();
+    }
+
+    public Blend getBlend() {
+        return super.getBlend();
+    }
+
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+
+    @Override
+    public String toString() {
+        return "Order: " + espressoBasedOrder.name() + ", Quantity: " + quantity + ", Blend: " + blendChosen.getName() + ", Total Price: $" + getTotalPrice();
+    }
+
+
+}
+
+class FilterBasedOrder extends CoffeeMenuItem {
+
+    FilterBasedDrink filterBasedOrder;
+ 
+    
+
+    FilterBasedOrder(String name, FilterBasedDrink filterBasedOrder,  int quantity, double price, Blend blendChosen) {
+        super(name, quantity, price, blendChosen);
+        this.filterBasedOrder = filterBasedOrder;
+    
+    }
+
+    public FilterBasedDrink getFilterBasedOrder() {
+        return this.filterBasedOrder;  
+    }
+
+    @Override  
+    public double getTotalPrice() {
+        return super.getTotalPrice();
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    public Blend getBlend() {
+        return super.getBlend();
+    }
+
+
+    @Override
+    public String toString() {
+        return "Order: " + filterBasedOrder.name() + ", Quantity: " + quantity + ", Blend: " + blendChosen.getName() + ", Total Price: $" + getTotalPrice();
+    }
 
 }

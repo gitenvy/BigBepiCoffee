@@ -1,6 +1,9 @@
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -16,26 +19,14 @@ public class ProjectController {
         this.primaryStage = primaryStage;
     }
 
-    public void getMenu() {
-        System.out.println("DEBUG GET MENU TRIGGERED");
-        model.getMenu();
+    public ObservableList getMenu() {
+       // System.out.println("DEBUG GET MENU TRIGGERED");
+        return model.getMenu();
+        
 
     }
 
-    public void menuWindow() {
-        Stage menuStage = new Stage();
-
-        menuStage.setTitle("Menu");
-        ListView<Drink> menuList = new ListView<>();
-        menuList.setItems(model.getMenu());
-
-        VBox menuVbox = new VBox(10, menuList);
-
-        Scene scene = new Scene(menuVbox);
-        menuStage.setScene(scene);
-
-        menuStage.initOwner(primaryStage); 
-        menuStage.show();
-    }
+    
+    
     
 }

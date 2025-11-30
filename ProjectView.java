@@ -71,7 +71,7 @@ public class ProjectView {
 
         this.viewWholeMenuButton = new Button("View the whole menu");
 
-        viewWholeMenuButton.setOnAction(event -> controller.menuWindow()); // execute sub window
+        viewWholeMenuButton.setOnAction(event -> this.menuWindow()); // execute sub window
         // TODO modality is broken
 
         this.btnBuyEspressoItem = new Button("Buy Espresso-based Item");
@@ -100,6 +100,66 @@ public class ProjectView {
 
 
     }
+
+    public void menuWindow() {
+        Stage menuStage = new Stage();
+
+        menuStage.setTitle("Menu");
+        ListView<Drink> menuList = new ListView<>();
+        menuList.setItems(controller.getMenu());
+
+      
+
+        
+
+        TextField qtyField = new TextField();
+
+        HBox qtyOrderRow = new HBox(5, new Label("How many to order?"), qtyField);
+      //  Integer orderQuantity = Integer.valueOf(qtyField.getText());
+        // TODO idk???
+        Button addItemBtn = new Button();
+        addItemBtn.setOnAction(event -> {
+             Drink selected = menuList.getSelectionModel().getSelectedItem();
+
+            if (selected == null) {
+                System.out.println("Nothing selected!");
+                return;
+            }
+
+            System.out.println("You selected: " + selected);
+
+            int orderQuantity = 1;     // temporary
+            Blend blend = null;   // temporary
+
+            if (selected instanceof EspressoBasedDrink espressoDrink) {
+                model.addEspressoOrder(espressoDrink, orderQuantity, blend);
+            } 
+           // else if (selected instanceof FilterBasedDrink filterDrink) {
+              //  model.addFilterOrder(filterDrink, quantity, blend);
+                //TODO unfinishedddd
+    
+        });
+
+        // Button peanutButterBlendBtn = new Button();
+        // peanutButterBlendBtn.setOnAction(event -> {
+            
+       // });
+
+      //  HBox blendRow = new HBox(5, peanutButterBlendBtn);
+        // TODO add blending stuff
+        
+        VBox menuVbox = new VBox(10, menuList, qtyOrderRow, addItemBtn);
+
+
+
+        Scene scene = new Scene(menuVbox);
+        menuStage.setScene(scene);
+
+        menuStage.initOwner(primaryStage); 
+        menuStage.show();
+        }
+
+
 
     private void createAndConfigurePane() {
 
