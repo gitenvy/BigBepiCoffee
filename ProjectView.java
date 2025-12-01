@@ -88,17 +88,18 @@ public class ProjectView {
         this.btnViewOrders = new Button("View orders");
 
         btnViewOrders.setOnAction(event -> {
-             
 
-        // TODO modality is broken
-      
-           controller.viewOrders();
-        
+
+              controller.viewOrders();
+            
         });
 
 
 
         this.btnRemoveOrder = new Button("Remove an order");
+        btnRemoveOrder.setOnAction(event -> {
+            this.removeOrderWindow();
+        });
         this.btnFindOrderByName = new Button("Find an order by name");
         this.btnFindOrdersByQuantity = new Button("Find order by quantitity");
         this.btnViewEspressoOrders = new Button("View Espresso Orders");
@@ -169,7 +170,46 @@ public class ProjectView {
 
         menuStage.initOwner(primaryStage); 
         menuStage.show();
-        }
+    }
+
+
+    public void removeOrderWindow() {
+        ListView<String> orderList = new ListView<>();
+
+            for (CoffeeMenuItem item : controller.getOrders()) {
+               
+                orderList.getItems().add(item.toString());
+                
+            }
+
+            Stage orderStage = new Stage();
+
+            Button removeBtn = new Button("Remove");
+            removeBtn.setOnAction(event -> {
+                int selectedItemIndex = orderList.getSelectionModel().getSelectedIndex();
+                controller.getOrders().remove(selectedItemIndex);
+                // SINCE LIST INDEX FOLLOWS ORDERS LIST INDEX, THIS WORKS!!!!!!
+                orderStage.close();
+                
+            });
+
+            // controller.removeOrders();
+
+
+            HBox removeRow = new HBox(5, removeBtn);
+            
+
+
+            
+            VBox root = new VBox(5, orderList, removeBtn);
+            Scene scene = new Scene(root, 400, 300);
+
+            orderStage.setScene(scene);
+            orderStage.setTitle("Orders");
+            orderStage.initOwner(primaryStage); 
+            orderStage.show();
+
+    }
 
 
 

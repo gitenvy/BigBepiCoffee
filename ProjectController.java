@@ -87,14 +87,14 @@ public class ProjectController {
             ListView<String> orderList = new ListView<>();
 
             for (CoffeeMenuItem item : model.getOrdersList()) {
-                if (item instanceof EspressoBasedOrder) {
-                    orderList.getItems().add(item.toString());
-                }
-                if (item instanceof FilterBasedOrder) {
-                    orderList.getItems().add(item.toString());
-                }
-            }
+               
+                orderList.getItems().add(item.toString());
             
+              
+              
+                
+            }
+
 
             Stage orderStage = new Stage();
             VBox root = new VBox(orderList);
@@ -115,6 +115,8 @@ public class ProjectController {
     public void removeOrders() {
 
         // TODO listview and multiple?
+        
+
 
     }
 
