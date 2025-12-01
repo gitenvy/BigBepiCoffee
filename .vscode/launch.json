@@ -2,11 +2,18 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MainMenu",
+            "request": "launch",
+            "mainClass": "MainMenu",
+            "projectName": "Project_a4434fd1"
+        },
+        {
+            "type": "java",
             "name": "ProjectMVC",
             "request": "launch",
             "mainClass": "ProjectMVC",
             "projectName": "Project_a4434fd1",
-               "vmArgs": "--module-path \"c:\\Users\\bepi\\Desktop\\IPRO002\\SDKs\\javafx-sdk-25.0.1\\lib\" --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path \"c:\\Users\\bepi\\Desktop\\IPRO002\\SDKs\\javafx-sdk-25.0.1\\lib\" --add-modules javafx.controls,javafx.fxml"
         },
         {
             "type": "java",

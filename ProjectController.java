@@ -112,13 +112,14 @@ public class ProjectController {
     }
 
 
-    public void removeOrders() {
+    // public void removeOrders() {
 
-        // TODO listview and multiple?
+    
+    // TODO fix pricing on view.
         
 
 
-    }
+    // }
 
     
     

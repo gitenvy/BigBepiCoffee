@@ -193,7 +193,7 @@ public class ProjectView {
                 
             });
 
-            // controller.removeOrders();
+         
 
 
             HBox removeRow = new HBox(5, removeBtn);
