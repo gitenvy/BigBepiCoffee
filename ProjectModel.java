@@ -66,8 +66,12 @@ public class ProjectModel {
     public Blend getPeanutButterBlendObject() {
         
         return allBlends.get(0);
-
-
+    }
+    public Blend getBerryBlendObject() {
+        return allBlends.get(1);
+    }
+    public Blend getCaramellyBlendObject() {
+        return allBlends.get(2);
     }
 
     
@@ -109,7 +113,7 @@ class Blend {
     }
 
     public String toString() {
-        return "Blend Name: " + name + ", Beans: " + coffeeBlend.toString() + " taste profile" + this.tasteProfile;
+        return "Blend Name: " + this.name;
     }
 
 
@@ -121,6 +125,8 @@ class Blend {
     public void setName(String name) {
         this.name.set(name);
     }
+
+    
 
     
     public SimpleStringProperty getTasteProfileProperty() {
@@ -365,8 +371,16 @@ class EspressoBasedOrder extends CoffeeMenuItem {
 
     @Override
     public String toString() {
-        return "Order: " + espressoBasedOrder.name() + ", Quantity: " + quantity + ", Blend: " + blendChosen.getName() + ", Total Price: $" + getTotalPrice();
-    }
+        String drinkName = this.name;
+        String blendName;
+
+       
+        blendName = blendChosen.toString();  
+        
+
+    return drinkName + " × " + quantity + " (Blend: " + blendName + ")";
+}
+
 
 
 }
@@ -402,10 +416,12 @@ class FilterBasedOrder extends CoffeeMenuItem {
     }
 
 
-    @Override
+   @Override
     public String toString() {
-        return "Order: " + filterBasedOrder.name() + ", Quantity: " + quantity + ", Blend: " + blendChosen.getName() + ", Total Price: $" + getTotalPrice();
+        String drinkName = this.name;
+        return drinkName + " × " + quantity + "\n" + blendChosen.toString();
     }
+
 
 }
 

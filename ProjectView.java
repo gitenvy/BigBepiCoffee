@@ -131,12 +131,19 @@ public class ProjectView {
 
       
         ToggleGroup blendGroup = new ToggleGroup(); 
-        RadioButton peanutButterBlendRadioBtn = new RadioButton("Peanut Butter");
+        RadioButton peanutButterBlendRadioBtn = new RadioButton("Peanut Butter Blend");
         peanutButterBlendRadioBtn.setToggleGroup(blendGroup);
+        RadioButton berryBlendRadioBtn = new RadioButton("Berry Blend");
+        berryBlendRadioBtn.setToggleGroup(blendGroup);
+        RadioButton caramellyBlendRadioBtn = new RadioButton("Caramelly Blend");
+        caramellyBlendRadioBtn.setToggleGroup(blendGroup);
+
+
+        
         
         
 
-        HBox blendRow = new HBox(5, new Label("Choose a blend: "),peanutButterBlendRadioBtn);
+        HBox blendRow = new HBox(5, new Label("Choose a blend: "),peanutButterBlendRadioBtn, berryBlendRadioBtn, caramellyBlendRadioBtn);
       
 
         TextField qtyField = new TextField();

@@ -29,9 +29,16 @@ public class ProjectController {
     }
 
     public Blend getBlend(String blendName) {
-        if (blendName.equals("Peanut Butter") ) {
+        if (blendName.equals("Peanut Butter Blend") ) {
             return model.getPeanutButterBlendObject();
         }
+        else if (blendName.equals("Berry Blend")) {
+            return model.getBerryBlendObject();
+        }
+        else if (blendName.equals("Caramelly Blend")) {
+            return model.getCaramellyBlendObject();
+        }
+
 
         
         return null;
@@ -76,23 +83,38 @@ public class ProjectController {
     }
 
     public void viewOrders() {
-           
-
-            
-            // EspressoBasedOrder hi = (EspressoBasedOrder) orders.get(0);
-            // System.out.println(hi.blendChosen);
-            // System.out.println(hi.quantity);
-            // System.out.println(hi.price);
+    
+            ListView<String> orderList = new ListView<>();
 
             for (CoffeeMenuItem item : model.getOrdersList()) {
                 if (item instanceof EspressoBasedOrder) {
-                    System.out.println(item.name + " " + item.blendChosen);
+                    orderList.getItems().add(item.toString());
                 }
                 if (item instanceof FilterBasedOrder) {
-                    System.out.println(item.name + item.quantity);
+                    orderList.getItems().add(item.toString());
                 }
             }
+            
 
+            Stage orderStage = new Stage();
+            VBox root = new VBox(orderList);
+            Scene scene = new Scene(root, 400, 300);
+
+            orderStage.setScene(scene);
+            orderStage.setTitle("Orders");
+            orderStage.show();
+
+            
+
+          
+
+
+    }
+
+
+    public void removeOrders() {
+
+        // TODO listview and multiple?
 
     }
 
