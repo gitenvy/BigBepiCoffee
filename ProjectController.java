@@ -21,7 +21,7 @@ public class ProjectController {
         this.primaryStage = primaryStage;
     }
 
-    public ObservableList getMenu() {
+    public ObservableList<Drink> getMenu() {
        // System.out.println("DEBUG GET MENU TRIGGERED");
         return model.getMenu();
         
@@ -112,16 +112,28 @@ public class ProjectController {
     }
 
 
-    // public void removeOrders() {
-
+    public int findOrderByName(String name) {
+       
     
-    // TODO fix pricing on view.
+
+        for (int i =0; i < model.getMenu().size(); i++) {
+            Drink item = model.getMenu().get(i);
+
+            if (item instanceof EspressoBasedDrink) {
+                if (item.getName().equals(name)) {
+                    return i;
+                }
+            }
+            else if (item instanceof FilterBasedDrink) {
+                 if (item.getName().equals(name)) {
+                    return i;
+                }
+            }
         
+        }
 
-
-    // }
-
+        return 0;
     
     
-    
+    }
 }

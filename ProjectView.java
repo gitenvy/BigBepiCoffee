@@ -1,5 +1,6 @@
 import java.lang.ModuleLayer.Controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -101,6 +102,9 @@ public class ProjectView {
             this.removeOrderWindow();
         });
         this.btnFindOrderByName = new Button("Find an order by name");
+      //  btnFindOrderByName.setOnAction(event -> {
+       //     this.findOrderByNameWindows();
+       // });
         this.btnFindOrdersByQuantity = new Button("Find order by quantitity");
         this.btnViewEspressoOrders = new Button("View Espresso Orders");
         this.btnViewFilterOrders = new Button("View Filter Orders");
@@ -139,6 +143,22 @@ public class ProjectView {
         RadioButton caramellyBlendRadioBtn = new RadioButton("Caramelly Blend");
         caramellyBlendRadioBtn.setToggleGroup(blendGroup);
 
+        // 
+        TextField sortField = new TextField();
+        Label sortLabel = new Label("Sort ");
+
+        Button sortButton = new Button("Sort");
+
+        sortButton.setOnAction(event -> {
+            int sortIndex = controller.findOrderByName(sortField.getText());
+            ObservableList<Drink> sortedList = FXCollections.observableArrayList();
+            sortedList.add(controller.getMenu().get(sortIndex));
+            menuList.setItems(sortedList);
+        });
+
+        HBox sortMenuRow = new HBox(5, sortLabel, sortField, sortButton);
+
+        //
 
         
         
@@ -161,7 +181,7 @@ public class ProjectView {
 
         
         
-        VBox menuVbox = new VBox(10, menuList, qtyOrderRow, addItemBtn, blendRow);
+        VBox menuVbox = new VBox(10, sortMenuRow, menuList, qtyOrderRow, addItemBtn, blendRow);
 
 
 
@@ -210,7 +230,18 @@ public class ProjectView {
             orderStage.show();
 
     }
+    
 
+    //public void findOrderByNameWindows() {
+
+      //  Label typeOrderNameLabel = new Label("Type the order you want to find?")
+
+
+
+
+
+
+ //   }
 
 
     private void createAndConfigurePane() {

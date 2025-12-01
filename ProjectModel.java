@@ -57,7 +57,7 @@ public class ProjectModel {
         return filterMenu;
     }
 
-    public ObservableList getMenu() {
+    public ObservableList<Drink> getMenu() {
 
         return fullMenu;
 
@@ -85,6 +85,9 @@ interface Drink {
 
     double getPrice();
     int getSweetness();
+  
+    public String getName();
+
 
 
 }
@@ -234,6 +237,12 @@ enum EspressoBasedDrink implements Drink {
         return this.acidity;
     }
 
+    @Override
+    public String getName() {
+         return this.name();
+    }
+
+
    
 
     static final Comparator<EspressoBasedDrink> bodyComparator = Comparator.comparing(EspressoBasedDrink::getBody);
@@ -265,6 +274,12 @@ enum FilterBasedDrink implements Drink {
     public double getPrice() {
         return this.price;
     }
+
+    @Override
+    public String getName() {
+        return this.name();
+    }
+
 
     @Override
     public int getSweetness() { 
