@@ -28,6 +28,10 @@ public class ProjectModel {
         EspressoBasedOrder order = new EspressoBasedOrder(drink.name(),drink,qty, drink.getPrice(), blend);
         orders.add(order);
     }
+
+    public ObservableList getOrdersList() {
+        return this.orders;
+    }
     
     ProjectModel() {
         this.espressoMenu = FXCollections.observableArrayList(EspressoBasedDrink.values());
@@ -35,6 +39,8 @@ public class ProjectModel {
         fullMenu = FXCollections.observableArrayList();
         fullMenu.addAll(espressoMenu);
         fullMenu.addAll(filterMenu);
+        this.orders = FXCollections.observableArrayList();
+
 
     }
 
@@ -317,6 +323,8 @@ abstract class CoffeeMenuItem {
     }
 
     public abstract String toString();
+
+    
 }
 
 

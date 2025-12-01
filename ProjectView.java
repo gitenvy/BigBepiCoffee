@@ -1,4 +1,6 @@
 import java.lang.ModuleLayer.Controller;
+
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,6 +24,7 @@ public class ProjectView {
     private Stage primaryStage;
     private VBox vbox;
     private Label welcomeLabel;
+     int windowOpened = 0;
 
     private Label whatToDoLabel;
 
@@ -70,13 +73,35 @@ public class ProjectView {
         
 
         this.viewWholeMenuButton = new Button("View the whole menu");
+      
+        viewWholeMenuButton.setOnAction(event -> {
+          
+            this.menuWindow();
+           
+        }); // execute sub window
 
-        viewWholeMenuButton.setOnAction(event -> this.menuWindow()); // execute sub window
-        // TODO modality is broken
+        // should be in view orders. TODO 
+        
 
         this.btnBuyEspressoItem = new Button("Buy Espresso-based Item");
         this.btnBuyFilterItem = new Button("Buy Fiter-based Item");
         this.btnViewOrders = new Button("View orders");
+
+        btnViewOrders.setOnAction(event -> {
+                windowOpened = 1;
+
+        // TODO modality is broken
+        if (windowOpened == 1) {
+            ObservableList orders = controller.getOrders();
+            EspressoBasedOrder hi = (EspressoBasedOrder) orders.get(0);
+            System.out.println(hi.blendChosen);
+            System.out.println(hi.quantity);
+            System.out.println(hi.price);
+        }
+        });
+
+
+
         this.btnRemoveOrder = new Button("Remove an order");
         this.btnFindOrderByName = new Button("Find an order by name");
         this.btnFindOrdersByQuantity = new Button("Find order by quantitity");
@@ -84,7 +109,7 @@ public class ProjectView {
         this.btnViewFilterOrders = new Button("View Filter Orders");
         this.btnCheckout = new Button("Checkout");
 
-        HBox menuButtonsOrderRow = new HBox(5, viewWholeMenuButton, btnViewOrders, btnRemoveOrder, btnFindOrderByName, btnFindOrdersByQuantity, btnViewEspressoOrders, btnViewFilterOrders);
+        HBox menuButtonsOrderRow = new HBox(10, viewWholeMenuButton, btnViewOrders, btnRemoveOrder, btnFindOrderByName, btnFindOrdersByQuantity, btnViewEspressoOrders, btnViewFilterOrders);
         HBox menuBuyAndCheckoutRow = new HBox(5, btnBuyEspressoItem, btnBuyFilterItem, btnCheckout);
 
         vbox.getChildren().addAll(menuButtonsOrderRow, menuBuyAndCheckoutRow);
@@ -109,24 +134,28 @@ public class ProjectView {
         menuList.setItems(controller.getMenu());
 
       
-
-        Button peanutButterBlendBtn = new Button("Peanut Butter");
-        peanutButterBlendBtn.setOnAction(event -> {
-            controller.getBlend(0);
-        });
+        ToggleGroup blendGroup = new ToggleGroup(); 
+        RadioButton peanutButterBlendRadioBtn = new RadioButton("Peanut Butter");
+        peanutButterBlendRadioBtn.setToggleGroup(blendGroup);
+        
         
 
-        HBox blendRow = new HBox(5, new Label("Choose a blend: "),peanutButterBlendBtn);
-        // TODO add blending stuff
+        HBox blendRow = new HBox(5, new Label("Choose a blend: "),peanutButterBlendRadioBtn);
+      
 
         TextField qtyField = new TextField();
 
         HBox qtyOrderRow = new HBox(5, new Label("How many to order?"), qtyField);
-      //  Integer orderQuantity = Integer.valueOf(qtyField.getText());
-        // TODO idk???
+      
+        // TODO SET UP INTEGER PARSING!!!!
         Button addItemBtn = new Button("Add Item");
         addItemBtn.setOnAction(event -> {
-             Drink selected = menuList.getSelectionModel().getSelectedItem();
+            Drink selected = menuList.getSelectionModel().getSelectedItem();
+
+          
+            String blendName = ((RadioButton) blendGroup.getSelectedToggle()).getText();
+            Blend selectedBlend = controller.getBlend(blendName);
+
 
             if (selected == null) {
                 System.out.println("Nothing selected!");
@@ -135,15 +164,20 @@ public class ProjectView {
 
             System.out.println("You selected: " + selected);
 
-            int orderQuantity = 1;     // temporary
-            Blend blend = null;   // temporary
+            //int orderQuantity = 1;     // temporary
+            int orderQuantity = Integer.parseInt(qtyField.getText());
+
+       
 
             if (selected instanceof EspressoBasedDrink espressoDrink) {
-                model.addEspressoOrder(espressoDrink, orderQuantity, blend);
+                model.addEspressoOrder(espressoDrink, orderQuantity, selectedBlend);
             } 
            // else if (selected instanceof FilterBasedDrink filterDrink) {
               //  model.addFilterOrder(filterDrink, quantity, blend);
-                //TODO unfinishedddd
+                //TODO add filter logic
+            menuStage.close();
+           
+
     
         });
 

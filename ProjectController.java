@@ -26,13 +26,17 @@ public class ProjectController {
 
     }
 
-    public Blend getBlend(int choice) {
-        if (choice == 0) {
+    public Blend getBlend(String blendName) {
+        if (blendName == "Peanut Butter") {
             return model.getPeanutButterBlendObject();
         }
 
         
         return null;
+    }
+
+    public ObservableList<CoffeeMenuItem> getOrders() {
+        return model.getOrdersList();
     }
 
     
