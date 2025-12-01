@@ -88,16 +88,12 @@ public class ProjectView {
         this.btnViewOrders = new Button("View orders");
 
         btnViewOrders.setOnAction(event -> {
-                windowOpened = 1;
+             
 
         // TODO modality is broken
-        if (windowOpened == 1) {
-            ObservableList orders = controller.getOrders();
-            EspressoBasedOrder hi = (EspressoBasedOrder) orders.get(0);
-            System.out.println(hi.blendChosen);
-            System.out.println(hi.quantity);
-            System.out.println(hi.price);
-        }
+      
+           controller.viewOrders();
+        
         });
 
 
@@ -147,38 +143,12 @@ public class ProjectView {
 
         HBox qtyOrderRow = new HBox(5, new Label("How many to order?"), qtyField);
       
-        // TODO SET UP INTEGER PARSING!!!!
+      
         Button addItemBtn = new Button("Add Item");
         addItemBtn.setOnAction(event -> {
-            Drink selected = menuList.getSelectionModel().getSelectedItem();
-
-          
-            String blendName = ((RadioButton) blendGroup.getSelectedToggle()).getText();
-            Blend selectedBlend = controller.getBlend(blendName);
-
-
-            if (selected == null) {
-                System.out.println("Nothing selected!");
-                return;
-            }
-
-            System.out.println("You selected: " + selected);
-
-            //int orderQuantity = 1;     // temporary
-            int orderQuantity = Integer.parseInt(qtyField.getText());
-
-       
-
-            if (selected instanceof EspressoBasedDrink espressoDrink) {
-                model.addEspressoOrder(espressoDrink, orderQuantity, selectedBlend);
-            } 
-           // else if (selected instanceof FilterBasedDrink filterDrink) {
-              //  model.addFilterOrder(filterDrink, quantity, blend);
-                //TODO add filter logic
+            controller.handleAddItem(menuList, qtyField, blendGroup, menuStage);
             menuStage.close();
-           
-
-    
+            
         });
 
         
@@ -200,9 +170,7 @@ public class ProjectView {
 
         vbox = new VBox(5);
         vbox.setAlignment(Pos.CENTER);
-        ListView<Drink> menuList = new ListView<>();
-        vbox.getChildren().addAll(menuList);
-        // TODO create a seperate menulis windows, should not be in vbox.
+       
     
 
     }

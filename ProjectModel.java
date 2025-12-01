@@ -28,8 +28,12 @@ public class ProjectModel {
         EspressoBasedOrder order = new EspressoBasedOrder(drink.name(),drink,qty, drink.getPrice(), blend);
         orders.add(order);
     }
+    public void addFilterOrder(FilterBasedDrink drink, int qty, Blend blend) {
+        FilterBasedOrder order = new FilterBasedOrder(drink.name(), drink, qty, drink.getPrice(), blend);
+        orders.add(order);
+    }
 
-    public ObservableList getOrdersList() {
+    public ObservableList<CoffeeMenuItem> getOrdersList() {
         return this.orders;
     }
     
@@ -40,6 +44,7 @@ public class ProjectModel {
         fullMenu.addAll(espressoMenu);
         fullMenu.addAll(filterMenu);
         this.orders = FXCollections.observableArrayList();
+      
 
 
     }
