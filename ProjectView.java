@@ -148,10 +148,34 @@ public class ProjectView {
         TextField sortField = new TextField();
 
         sortField.textProperty().addListener((obs, old, newValue) -> {
-            int sortIndex = controller.findOrderByName(newValue);
-            ObservableList<Drink> sortedList = FXCollections.observableArrayList();
-            sortedList.add(controller.getMenu().get(sortIndex));
-            menuList.setItems(sortedList);
+            // int sortIndex = controller.findOrderByName(newValue);
+            // ObservableList<Drink> sortedList = FXCollections.observableArrayList();
+            // sortedList.add(controller.getMenu().get(sortIndex));
+            // menuList.setItems(sortedList);
+
+            ObservableList<Drink> sortedMenu = FXCollections.observableArrayList();
+
+            if (newValue.isEmpty()) {
+                menuList.setItems(controller.getMenu());
+                return;
+            }
+
+            for (Drink menuItem : controller.getMenu()) {
+                if (menuItem instanceof EspressoBasedDrink) {
+                    EspressoBasedDrink eMenuItem = (EspressoBasedDrink) menuItem;
+                    if (eMenuItem.name().toLowerCase().startsWith(newValue.toLowerCase())) {
+                        sortedMenu.add(menuItem);
+                    }
+                }
+                if (menuItem instanceof FilterBasedDrink) {
+                    FilterBasedDrink fMenuItem = (FilterBasedDrink) menuItem;
+                    if (fMenuItem.name().toLowerCase().startsWith(newValue.toLowerCase())) {
+                        sortedMenu.add(menuItem);
+                    }
+                }
+            }
+
+            menuList.setItems(sortedMenu);
             
         });
 
@@ -180,7 +204,7 @@ public class ProjectView {
         });
 
         sortHighToLowPriceBtn.setOnAction(event -> {
-            ObservableList<Drink> sortedList = controller.sortMenuItemByPriceHighToLow(); // wrong one.
+            ObservableList<Drink> sortedList = controller.sortMenuItemByPriceLowToHigh(); // wrong one.
          //  System.out.println("TRGGGERED");
             menuList.setItems(sortedList);
         });

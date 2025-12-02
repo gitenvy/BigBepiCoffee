@@ -118,7 +118,7 @@ public class ProjectController {
     }
 
 
-    public int findOrderByName(String name) {
+    public int findOrderByName(String name, ObservableList<Drink> menuList) {
        
         int sortIndex = 0;
         //Comparator<Drink> nameComparator = Comparator.comparing(Drink::getName);
@@ -144,6 +144,8 @@ public class ProjectController {
         
 
         return 0;
+
+        
     
     
     }
