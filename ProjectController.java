@@ -88,34 +88,7 @@ public class ProjectController {
 
     }
 
-    public void viewOrders() {
     
-            ListView<String> orderList = new ListView<>();
-
-            for (CoffeeMenuItem item : model.getOrdersList()) {
-               
-                orderList.getItems().add(item.toString());
-            
-              
-              
-                
-            }
-
-
-            Stage orderStage = new Stage();
-            VBox root = new VBox(orderList);
-            Scene scene = new Scene(root, 400, 300);
-
-            orderStage.setScene(scene);
-            orderStage.setTitle("Orders");
-            orderStage.show();
-
-            
-
-          
-
-
-    }
 
 
     public int findOrderByName(String name, ObservableList<Drink> menuList) {
@@ -169,4 +142,6 @@ public class ProjectController {
 
         return menuList;
     }
+
+    
 }

@@ -92,7 +92,7 @@ public class ProjectView {
         btnViewOrders.setOnAction(event -> {
 
 
-              controller.viewOrders();
+            this.viewOrders();
             
         });
 
@@ -124,6 +124,75 @@ public class ProjectView {
 
         
 
+
+
+    }
+
+    public void viewOrders() {
+    
+            ListView<CoffeeMenuItem> orderList = new ListView<>();
+
+            for (CoffeeMenuItem item : model.getOrdersList()) {
+               
+                orderList.getItems().add(item);
+            
+              
+              
+                
+            }
+
+
+            
+
+            TextField sortField = new TextField();
+
+        sortField.textProperty().addListener((obs, old, newValue) -> {
+            // int sortIndex = controller.findOrderByName(newValue);
+            // ObservableList<Drink> sortedList = FXCollections.observableArrayList();
+            // sortedList.add(controller.getMenu().get(sortIndex));
+            // menuList.setItems(sortedList);
+            
+
+            ObservableList<CoffeeMenuItem> sortedOrders = FXCollections.observableArrayList();
+
+            if (newValue.isEmpty()) {
+                orderList.setItems(controller.getOrders());
+                return;
+            }
+
+            for (CoffeeMenuItem menuItem : controller.getOrders()) {
+                if (menuItem instanceof EspressoBasedOrder) {
+                    EspressoBasedOrder eMenuItem = (EspressoBasedOrder) menuItem;
+                    if (eMenuItem.getName().toLowerCase().startsWith(newValue.toLowerCase())) {
+                        sortedOrders.add(menuItem);
+                    }
+                }
+                if (menuItem instanceof FilterBasedOrder) {
+                    FilterBasedOrder fMenuItem = (FilterBasedOrder) menuItem;
+                    if (fMenuItem.getName().toLowerCase().startsWith(newValue.toLowerCase())) {
+                        sortedOrders.add(menuItem);
+                    }
+                }
+            }
+
+            orderList.setItems(sortedOrders);
+            
+            });
+
+            HBox sortNameRow = new HBox(5, new Label("Sort by name: "), sortField);
+
+
+            Stage orderStage = new Stage();
+            VBox root = new VBox(sortNameRow, orderList);
+            Scene scene = new Scene(root, 400, 300);
+
+            orderStage.setScene(scene);
+            orderStage.setTitle("Orders");
+            orderStage.show();
+
+            
+
+          
 
 
     }
