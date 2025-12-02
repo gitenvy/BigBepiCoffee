@@ -1,4 +1,8 @@
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -139,5 +143,25 @@ public class ProjectController {
         return 0;
     
     
+    }
+
+
+    public ObservableList<Drink> sortMenuItemByPriceLowToHigh() {
+       
+
+        ObservableList<Drink> menuList = model.getMenu();
+
+        menuList.sort(Comparator.comparing(Drink::getPrice));
+
+        return menuList;
+
+    }
+
+    public ObservableList<Drink> sortMenuItemByPriceHighToLow() {
+        ObservableList<Drink> menuList = model.getMenu();
+
+        menuList.sort(Comparator.comparing(Drink::getPrice).reversed());
+
+        return menuList;
     }
 }

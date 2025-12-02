@@ -145,18 +145,42 @@ public class ProjectView {
 
         // 
         TextField sortField = new TextField();
-        Label sortLabel = new Label("Sort ");
+        Label sortNameLabel = new Label("Sort by name: ");
 
-        Button sortButton = new Button("Sort");
+        Button sortNameButton = new Button("Sort");
 
-        sortButton.setOnAction(event -> {
+        sortNameButton.setOnAction(event -> {
             int sortIndex = controller.findOrderByName(sortField.getText());
             ObservableList<Drink> sortedList = FXCollections.observableArrayList();
             sortedList.add(controller.getMenu().get(sortIndex));
             menuList.setItems(sortedList);
         });
 
-        HBox sortMenuRow = new HBox(5, sortLabel, sortField, sortButton);
+        Label sortPriceLabel = new Label("Sort by price: ");
+        Button sortLowtoHighPriceBtn = new Button("Low to high");
+        Button sortHighToLowPriceBtn = new Button("High to low");
+
+        sortLowtoHighPriceBtn.setOnAction(event -> {
+            ObservableList<Drink> sortedList = controller.sortMenuItemByPriceHighToLow(); // wrong one.
+         //  System.out.println("TRGGGERED");
+            menuList.setItems(sortedList);
+        });
+
+        sortHighToLowPriceBtn.setOnAction(event -> {
+            ObservableList<Drink> sortedList = controller.sortMenuItemByPriceHighToLow(); // wrong one.
+         //  System.out.println("TRGGGERED");
+            menuList.setItems(sortedList);
+        });
+
+        HBox sortPriceRow = new HBox(5, sortPriceLabel, sortHighToLowPriceBtn, sortLowtoHighPriceBtn);
+
+
+
+        
+
+        
+
+        HBox sortNameMenuRow = new HBox(5, sortNameLabel, sortField, sortNameButton);
 
         //
 
@@ -181,7 +205,7 @@ public class ProjectView {
 
         
         
-        VBox menuVbox = new VBox(10, sortMenuRow, menuList, qtyOrderRow, addItemBtn, blendRow);
+        VBox menuVbox = new VBox(10, sortNameMenuRow,sortPriceRow, menuList, qtyOrderRow, addItemBtn, blendRow);
 
 
 
