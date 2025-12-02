@@ -133,16 +133,8 @@ public class ProjectView {
             ListView<CoffeeMenuItem> orderList = new ListView<>();
 
             for (CoffeeMenuItem item : model.getOrdersList()) {
-               
                 orderList.getItems().add(item);
-            
-              
-              
-                
             }
-
-
-            
 
             TextField sortField = new TextField();
 
@@ -181,9 +173,39 @@ public class ProjectView {
 
             HBox sortNameRow = new HBox(5, new Label("Sort by name: "), sortField);
 
+            Button sortByTypeEspBtn = new Button("Sort by Espresso-Based");
+            Button sortByTypeFilterBtn = new Button("Sort by Filter-Based");
+
+            HBox sortTypeRow = new HBox(5, new Label("Sort by drink type: "), sortByTypeEspBtn, sortByTypeFilterBtn);
+
+            sortByTypeEspBtn.setOnAction(event -> {
+
+                ObservableList<CoffeeMenuItem> sortedEsp = FXCollections.observableArrayList();
+                  for (CoffeeMenuItem item : model.getOrdersList()) {
+                    if (item instanceof EspressoBasedOrder) {
+                        sortedEsp.add(item);
+                    }
+
+                orderList.setItems(sortedEsp);
+            }
+            });
+
+            sortByTypeFilterBtn.setOnAction(event -> {
+                 ObservableList<CoffeeMenuItem> sortedFilter = FXCollections.observableArrayList();
+                  for (CoffeeMenuItem item : model.getOrdersList()) {
+                    if (item instanceof FilterBasedOrder) {
+                        sortedFilter.add(item);
+                    }
+
+                orderList.setItems(sortedFilter);
+                  }
+            });
+
+
+
 
             Stage orderStage = new Stage();
-            VBox root = new VBox(sortNameRow, orderList);
+            VBox root = new VBox(sortNameRow,sortTypeRow, orderList);
             Scene scene = new Scene(root, 400, 300);
 
             orderStage.setScene(scene);
