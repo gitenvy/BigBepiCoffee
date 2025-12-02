@@ -1,3 +1,4 @@
+
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -115,20 +116,23 @@ public class ProjectController {
     public int findOrderByName(String name) {
        
     
+        //Comparator<Drink> nameComparator = Comparator.comparing(Drink::getName);
 
         for (int i =0; i < model.getMenu().size(); i++) {
             Drink item = model.getMenu().get(i);
 
             if (item instanceof EspressoBasedDrink) {
-                if (item.getName().equals(name)) {
+                EspressoBasedDrink eItem = (EspressoBasedDrink) item;
+                if (eItem.name().equals(name)) {
                     return i;
                 }
             }
             else if (item instanceof FilterBasedDrink) {
-                 if (item.getName().equals(name)) {
+                FilterBasedDrink fItem = (FilterBasedDrink) item;
+                 if (fItem.name().equals(name)) {
                     return i;
                 }
-            }
+            }//todo fix sort
         
         }
 

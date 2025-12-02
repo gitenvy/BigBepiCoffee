@@ -86,7 +86,7 @@ interface Drink {
     double getPrice();
     int getSweetness();
   
-    public String getName();
+    String getName();
 
 
 
