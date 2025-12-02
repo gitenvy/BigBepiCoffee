@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -119,7 +120,7 @@ public class ProjectController {
 
     public int findOrderByName(String name) {
        
-    
+        int sortIndex = 0;
         //Comparator<Drink> nameComparator = Comparator.comparing(Drink::getName);
 
         for (int i =0; i < model.getMenu().size(); i++) {
@@ -139,6 +140,8 @@ public class ProjectController {
             }//todo fix sort
         
         }
+
+        
 
         return 0;
     

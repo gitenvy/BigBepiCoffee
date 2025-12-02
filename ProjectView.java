@@ -41,6 +41,7 @@ public class ProjectView {
     private Button btnViewFilterOrders;
     private Button btnCheckout;
     private ListView<Drink> listView;
+   
 
 
     public ProjectView (ProjectController controller, ProjectModel model, Stage primaryStage) {
@@ -48,7 +49,7 @@ public class ProjectView {
         this.controller = controller;
         this.model = model;
         this.primaryStage = primaryStage;
-
+      
         createAndConfigurePane();
         createAndLayoutControls();
         updateControllerFromListeners();
@@ -145,16 +146,28 @@ public class ProjectView {
 
         // 
         TextField sortField = new TextField();
-        Label sortNameLabel = new Label("Sort by name: ");
 
-        Button sortNameButton = new Button("Sort");
-
-        sortNameButton.setOnAction(event -> {
-            int sortIndex = controller.findOrderByName(sortField.getText());
+        sortField.textProperty().addListener((obs, old, newValue) -> {
+            int sortIndex = controller.findOrderByName(newValue);
             ObservableList<Drink> sortedList = FXCollections.observableArrayList();
             sortedList.add(controller.getMenu().get(sortIndex));
             menuList.setItems(sortedList);
+            
         });
+
+        Label sortNameLabel = new Label("Sort by name: ");
+
+        // Button sortNameButton = new Button("Sort");
+
+        // sortNameButton.setOnAction(event -> {
+        //     int sortIndex = controller.findOrderByName(sortField.getText());
+        //     //
+            
+        //     //
+        //     ObservableList<Drink> sortedList = FXCollections.observableArrayList();
+        //     sortedList.add(controller.getMenu().get(sortIndex));
+        //     menuList.setItems(sortedList);
+        // });
 
         Label sortPriceLabel = new Label("Sort by price: ");
         Button sortLowtoHighPriceBtn = new Button("Low to high");
@@ -180,7 +193,7 @@ public class ProjectView {
 
         
 
-        HBox sortNameMenuRow = new HBox(5, sortNameLabel, sortField, sortNameButton);
+        HBox sortNameMenuRow = new HBox(5, sortNameLabel, sortField);
 
         //
 
