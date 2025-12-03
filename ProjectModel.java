@@ -201,11 +201,11 @@ enum EspressoBasedDrink implements Drink {
     MAGIC_LATTE(5, 6, 5, 5, 5);
 
 
-    final private int body;
-    final private double price;
-    final private int sweetness;
-    final private int intensityInMilk;
-    final private int acidity;
+    private final  int body;
+    private final double price;
+    private final  int sweetness;
+    private final  int intensityInMilk;
+    private final  int acidity;
 
     EspressoBasedDrink(int body, double price, int sweetness, int intensityInMilk, int acidity) {
         this.body = body;
@@ -260,9 +260,9 @@ enum FilterBasedDrink implements Drink {
     FRENCH_PRESS(4,3, 3),
     COLD_BREW(5, 4, 1);
 
-    private double price;
-    private int sweetness;
-    private int clarity;
+   private final double price;
+    private final int sweetness;
+    private final int clarity;
 
     FilterBasedDrink(double price, int sweetness, int clarity) {
         this.price = price;

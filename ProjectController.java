@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
@@ -54,7 +55,7 @@ public class ProjectController {
         return model.getOrdersList();
     }
 
-    public void handleAddItem(ListView<Drink> menuList, TextField qtyField, ToggleGroup blendGroup, Stage menuStage) {
+    public void handleAddItem(TableView<Drink> menuList, TextField qtyField, ToggleGroup blendGroup, Stage menuStage) {
             Drink selected = menuList.getSelectionModel().getSelectedItem();
 
           

@@ -1,5 +1,7 @@
 import java.lang.ModuleLayer.Controller;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -13,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -220,11 +223,30 @@ public class ProjectView {
     }
 
     public void menuWindow() {
+
+        // TODO : Make a tableView instead.
+
         Stage menuStage = new Stage();
 
+
+
+
+
         menuStage.setTitle("Menu");
-        ListView<Drink> menuList = new ListView<>();
-        menuList.setItems(controller.getMenu());
+        //ListView<Drink> menuList = new ListView<>();
+       TableView<Drink> menuTable = new TableView<>();
+
+        TableColumn<Drink, String> nameCol = new TableColumn<>("Name");
+        nameCol.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getName()));
+
+        TableColumn<Drink, Double> priceCol = new TableColumn<>("Price");
+        priceCol.setCellValueFactory(cellData ->
+                new SimpleObjectProperty<>(cellData.getValue().getPrice()));
+
+        menuTable.getColumns().addAll(nameCol, priceCol);
+        menuTable.setItems(controller.getMenu());
+
 
       
         ToggleGroup blendGroup = new ToggleGroup(); 
@@ -247,7 +269,7 @@ public class ProjectView {
             ObservableList<Drink> sortedMenu = FXCollections.observableArrayList();
 
             if (newValue.isEmpty()) {
-                menuList.setItems(controller.getMenu());
+                menuTable.setItems(controller.getMenu());
                 return;
             }
 
@@ -266,7 +288,7 @@ public class ProjectView {
                 }
             }
 
-            menuList.setItems(sortedMenu);
+            menuTable.setItems(sortedMenu);
             
         });
 
@@ -291,13 +313,13 @@ public class ProjectView {
         sortLowtoHighPriceBtn.setOnAction(event -> {
             ObservableList<Drink> sortedList = controller.sortMenuItemByPriceHighToLow(); // wrong one.
          //  System.out.println("TRGGGERED");
-            menuList.setItems(sortedList);
+            menuTable.setItems(sortedList);
         });
 
         sortHighToLowPriceBtn.setOnAction(event -> {
             ObservableList<Drink> sortedList = controller.sortMenuItemByPriceLowToHigh(); // wrong one.
          //  System.out.println("TRGGGERED");
-            menuList.setItems(sortedList);
+            menuTable.setItems(sortedList);
         });
 
         HBox sortPriceRow = new HBox(5, sortPriceLabel, sortHighToLowPriceBtn, sortLowtoHighPriceBtn);
@@ -326,14 +348,14 @@ public class ProjectView {
       
         Button addItemBtn = new Button("Add Item");
         addItemBtn.setOnAction(event -> {
-            controller.handleAddItem(menuList, qtyField, blendGroup, menuStage);
+            controller.handleAddItem(menuTable, qtyField, blendGroup, menuStage);
             menuStage.close();
             
         });
 
         
         
-        VBox menuVbox = new VBox(10, sortNameMenuRow,sortPriceRow, menuList, qtyOrderRow, addItemBtn, blendRow);
+        VBox menuVbox = new VBox(10, sortNameMenuRow,sortPriceRow, menuTable, qtyOrderRow, addItemBtn, blendRow);
 
 
 
@@ -382,11 +404,8 @@ public class ProjectView {
             orderStage.show();
 
     }
-    
 
-    //public void findOrderByNameWindows() {
-
-      //  Label typeOrderNameLabel = new Label("Type the order you want to find?")
+   
 
 
 
