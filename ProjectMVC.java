@@ -13,10 +13,6 @@ public class ProjectMVC extends Application {
         ProjectModel model = new ProjectModel();
         ProjectController controller = new ProjectController(model, primaryStage);
         ProjectView view = new ProjectView(controller, model, primaryStage);
-
-        Scene scene = new Scene(view.asParent(), 600, 300);
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     public static void main(String[] args) {

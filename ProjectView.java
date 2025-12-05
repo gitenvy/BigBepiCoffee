@@ -52,12 +52,57 @@ public class ProjectView {
         this.controller = controller;
         this.model = model;
         this.primaryStage = primaryStage;
-      
+        
+        initiateWelcomeScreen();
+
+
+    }
+
+
+    private void mainMenu() {
+
+       
         createAndConfigurePane();
         createAndLayoutControls();
         updateControllerFromListeners();
         observeModelAndUpdateControls();
 
+        Scene scene = new Scene(vbox, 800, 600);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+    }
+
+    private void initiateWelcomeScreen() {
+
+        VBox welcomeVbox;
+        Stage welcomeStage = new Stage();
+       
+        welcomeStage.setTitle("Coffee Shop Ordering System");
+
+        Label welcomeLabel = new Label("Welcome to the Coffee Shop's POS ordering system");
+        Button startButton = new Button("Tap to start");
+      
+
+        startButton.setOnAction(event -> {
+            welcomeStage.close();
+            mainMenu();
+        });
+
+        HBox welcomeRow = new HBox(5, welcomeLabel);
+        welcomeRow.setAlignment(Pos.CENTER);
+
+        HBox startRow = new HBox(5, startButton);
+        startRow.setAlignment(Pos.CENTER);
+
+        welcomeVbox = new VBox(5, welcomeRow, startRow);
+        
+        Scene scene = new Scene(welcomeVbox, 600, 300);
+
+        welcomeStage.setScene(scene);
+
+    
+        welcomeStage.show();
 
     }
 
