@@ -354,7 +354,8 @@ public class ProjectView {
         });
 
         
-        
+        addItemBtn.setAlignment(Pos.CENTER);
+        // TODO why no work
         VBox menuVbox = new VBox(10, sortNameMenuRow,sortPriceRow, menuTable, qtyOrderRow, addItemBtn, blendRow);
 
 
@@ -375,7 +376,7 @@ public class ProjectView {
                 orderList.getItems().add(item.toString());
                 
             }
-
+            // TODO OVERLAODING
             Stage orderStage = new Stage();
 
             Button removeBtn = new Button("Remove");
