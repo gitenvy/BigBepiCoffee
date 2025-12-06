@@ -27,11 +27,6 @@ public class ProjectModel {
     }
 
 
-
-    
-        //orders.add(new CoffeeMenuItem(menuItem.name, menuItem.quantity, menuItem.price, menuItem.blendChosen));
-        // get the details...
-
     public void addEspressoOrder(EspressoBasedDrink drink, int qty, Blend blend) {
         EspressoBasedOrder order = new EspressoBasedOrder(drink.name(),drink,qty, drink.getPrice(), blend);
         orders.add(order);

@@ -53,7 +53,7 @@ public class ProjectView {
         this.model = model;
         this.primaryStage = primaryStage;
         
-        initiateWelcomeScreen();
+        initiateWelcomeScreen(); // The first intialization of the welcome screen, which is the first screen.
 
 
     }
@@ -62,11 +62,10 @@ public class ProjectView {
     private void mainMenu() {
 
        
-        createAndConfigurePane();
-        createAndLayoutControls();
-        updateControllerFromListeners();
-        observeModelAndUpdateControls();
-
+        createAndConfigurePane(); 
+        createAndLayoutControls();  // Configure the main vbox and the main menu.
+       
+        
         Scene scene = new Scene(vbox, 800, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -84,8 +83,8 @@ public class ProjectView {
         Button startButton = new Button("Tap to start");
       
 
-        startButton.setOnAction(event -> {
-            welcomeStage.close();
+        startButton.setOnAction(event -> { // If clicked, will proceed to the main screen, which
+            welcomeStage.close();           // stores main functionality.
             mainMenu();
         });
 
@@ -110,13 +109,7 @@ public class ProjectView {
         return vbox;
     }
 
-    private void observeModelAndUpdateControls() {
-        
-    }
-
-    private void updateControllerFromListeners() {
-        // TODO
-    }
+   
 
 
     private void createAndLayoutControls () {
@@ -126,11 +119,11 @@ public class ProjectView {
       
         viewWholeMenuButton.setOnAction(event -> {
           
-            this.menuWindow();
+            this.menuWindow(); // Opens the menu window method upon clicking View the whole menu
            
-        }); // execute sub window
+        }); 
 
-        // should be in view orders. TODO 
+      
         
 
         this.btnViewOrders = new Button("View orders");
@@ -138,7 +131,7 @@ public class ProjectView {
         btnViewOrders.setOnAction(event -> {
 
 
-            this.viewOrders();
+            this.viewOrders(); //  Opens the viewOrder() method upon clicking the View orders.
             
         });
 
@@ -146,12 +139,12 @@ public class ProjectView {
 
         this.btnRemoveOrder = new Button("Remove an order");
         btnRemoveOrder.setOnAction(event -> {
-            this.removeOrderWindow();
+            this.removeOrderWindow();   // execute the removeOrderWindow() upon removing an order
         });
 
         this.btnCheckout = new Button("Checkout");
         btnCheckout.setOnAction(event -> {
-            this.checkoutWindow();
+            this.checkoutWindow();      // Moves on the checkout window.
         });
 
         HBox menuButtonsOrderRow = new HBox(10, viewWholeMenuButton, btnViewOrders, btnRemoveOrder);
@@ -185,10 +178,7 @@ public class ProjectView {
 
             TextField sortField = new TextField();
             sortField.textProperty().addListener((obs, old, newValue) -> {
-                // int sortIndex = controller.findOrderByName(newValue);
-                // ObservableList<Drink> sortedList = FXCollections.observableArrayList();
-                // sortedList.add(controller.getMenu().get(sortIndex));
-                // menuList.setItems(sortedList);
+               
             
 
             ObservableList<CoffeeMenuItem> sortedOrders = FXCollections.observableArrayList();
@@ -268,20 +258,14 @@ public class ProjectView {
 
     public void menuWindow() {
 
-        // TODO : Make a tableView instead.
-
-
         Stage menuStage = new Stage();
 
         menuStage.initOwner(primaryStage);
         menuStage.initModality(Modality.APPLICATION_MODAL);
 
-
-
         menuStage.setTitle("Menu");
-        //ListView<Drink> menuList = new ListView<>();
+       
         TableView<Drink> menuTable = new TableView<>();
-
         TableColumn<Drink, String> nameCol = new TableColumn<>("Name");
         nameCol.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getName()));
@@ -303,14 +287,11 @@ public class ProjectView {
         RadioButton caramellyBlendRadioBtn = new RadioButton("Caramelly Blend");
         caramellyBlendRadioBtn.setToggleGroup(blendGroup);
 
-        // 
+        
         TextField sortField = new TextField();
 
         sortField.textProperty().addListener((obs, old, newValue) -> {
-            // int sortIndex = controller.findOrderByName(newValue);
-            // ObservableList<Drink> sortedList = FXCollections.observableArrayList();
-            // sortedList.add(controller.getMenu().get(sortIndex));
-            // menuList.setItems(sortedList);
+          
 
             ObservableList<Drink> sortedMenu = FXCollections.observableArrayList();
 
@@ -340,31 +321,19 @@ public class ProjectView {
 
         Label sortNameLabel = new Label("Sort by name: ");
 
-        // Button sortNameButton = new Button("Sort");
-
-        // sortNameButton.setOnAction(event -> {
-        //     int sortIndex = controller.findOrderByName(sortField.getText());
-        //     //
-            
-        //     //
-        //     ObservableList<Drink> sortedList = FXCollections.observableArrayList();
-        //     sortedList.add(controller.getMenu().get(sortIndex));
-        //     menuList.setItems(sortedList);
-        // });
-
         Label sortPriceLabel = new Label("Sort by price: ");
         Button sortLowtoHighPriceBtn = new Button("Low to high");
         Button sortHighToLowPriceBtn = new Button("High to low");
 
         sortLowtoHighPriceBtn.setOnAction(event -> {
-            ObservableList<Drink> sortedList = controller.sortMenuItemByPriceHighToLow(); // wrong one.
-         //  System.out.println("TRGGGERED");
+            ObservableList<Drink> sortedList = controller.sortMenuItemByPriceHighToLow(); 
+        
             menuTable.setItems(sortedList);
         });
 
         sortHighToLowPriceBtn.setOnAction(event -> {
-            ObservableList<Drink> sortedList = controller.sortMenuItemByPriceLowToHigh(); // wrong one.
-         //  System.out.println("TRGGGERED");
+            ObservableList<Drink> sortedList = controller.sortMenuItemByPriceLowToHigh(); 
+        
             menuTable.setItems(sortedList);
         });
 
@@ -401,7 +370,7 @@ public class ProjectView {
 
         
         addItemBtn.setAlignment(Pos.CENTER);
-        // TODO why no work
+        
         VBox menuVbox = new VBox(10, sortNameMenuRow,sortPriceRow, menuTable, qtyOrderRow, addItemBtn, blendRow);
 
 
@@ -422,14 +391,14 @@ public class ProjectView {
                 orderList.getItems().add(item.toString());
                 
             }
-            // TODO OVERLAODING
+            
             Stage orderStage = new Stage();
 
             Button removeBtn = new Button("Remove");
             removeBtn.setOnAction(event -> {
                 int selectedItemIndex = orderList.getSelectionModel().getSelectedIndex();
                 controller.getOrders().remove(selectedItemIndex);
-                // SINCE LIST INDEX FOLLOWS ORDERS LIST INDEX, THIS WORKS!!!!!!
+                
                 orderStage.close();
                 
             });
@@ -508,7 +477,7 @@ public class ProjectView {
 
 
 
- //   }
+ 
 
 
     private void createAndConfigurePane() {

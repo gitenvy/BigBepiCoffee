@@ -28,7 +28,7 @@ public class ProjectController {
     }
 
     public ObservableList<Drink> getMenu() {
-       // System.out.println("DEBUG GET MENU TRIGGERED");
+    
         return model.getMenu();
         
 
@@ -80,7 +80,7 @@ public class ProjectController {
             else if (selected instanceof FilterBasedDrink filterDrink) {
                 model.addFilterOrder(filterDrink, orderQuantity, selectedBlend);
             }
-                //TODO add filter logic
+               
             menuStage.close();
            
 
@@ -94,7 +94,7 @@ public class ProjectController {
     public int findOrderByName(String name, ObservableList<Drink> menuList) {
        
         int sortIndex = 0;
-        //Comparator<Drink> nameComparator = Comparator.comparing(Drink::getName);
+       
 
         for (int i =0; i < model.getMenu().size(); i++) {
             Drink item = model.getMenu().get(i);
@@ -110,7 +110,7 @@ public class ProjectController {
                  if (fItem.name().equals(name)) {
                     return i;
                 }
-            }//todo fix sort
+            }
         
         }
 
