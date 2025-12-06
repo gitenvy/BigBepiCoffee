@@ -18,7 +18,15 @@ public class ProjectModel {
     ArrayList<Blend> allBlends = preset.initBlends();
 
     
-    
+    public double getCheckoutPrice() {
+        double total = 0.0;
+        for (CoffeeMenuItem item : orders) {
+            total += item.getTotalPrice();
+        }
+        return total;
+    }
+
+
 
     
         //orders.add(new CoffeeMenuItem(menuItem.name, menuItem.quantity, menuItem.price, menuItem.blendChosen));
@@ -104,14 +112,14 @@ class Blend {
     
 
     ObservableList<CoffeeBean> coffeeBlend;
-    private final SimpleStringProperty name;
+    private final String name;
     private final SimpleStringProperty tasteProfile;
 
 
 
     Blend (String name, String tasteProfile) {
         this.coffeeBlend = FXCollections.observableArrayList();
-        this.name = new SimpleStringProperty(name);
+        this.name = name;
         this.tasteProfile = new SimpleStringProperty(tasteProfile);
     }
 
@@ -121,7 +129,7 @@ class Blend {
 
 
 
-    public SimpleStringProperty getNameProperty() {
+    public String getNameProperty() {
         return this.name;
     }
 
@@ -260,7 +268,7 @@ enum FilterBasedDrink implements Drink {
     FRENCH_PRESS(4,3, 3),
     COLD_BREW(5, 4, 1);
 
-   private final double price;
+    private final double price;
     private final int sweetness;
     private final int clarity;
 
@@ -363,7 +371,7 @@ class EspressoBasedOrder extends CoffeeMenuItem {
     EspressoBasedOrder(String name, EspressoBasedDrink espressoBasedOrder, int quantity, double price, Blend blendChosen) {
         super(name, quantity, price, blendChosen);
         this.espressoBasedOrder = espressoBasedOrder;
-   
+    
     }
 
     public EspressoBasedDrink getEspressoBasedOrder() {
@@ -387,13 +395,10 @@ class EspressoBasedOrder extends CoffeeMenuItem {
     @Override
     public String toString() {
         String drinkName = this.name;
-        String blendName;
 
-       
-        blendName = blendChosen.toString();  
         
 
-    return drinkName + " × " + quantity + " (Blend: " + blendName + ")";
+    return drinkName + " × " + quantity + " (Blend: " + blendChosen.getNameProperty() + ")";
 }
 
 
@@ -481,6 +486,6 @@ class PresetCoffee {
         return allBlends;
 
 
-    }
+  }
 
 }

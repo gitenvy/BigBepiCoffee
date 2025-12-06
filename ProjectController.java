@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -130,7 +129,7 @@ public class ProjectController {
 
         ObservableList<Drink> menuList = model.getMenu();
 
-        menuList.sort(Comparator.comparing(Drink::getPrice));
+        menuList.sort(Comparator.comparing(Drink::getPrice).reversed());
 
         return menuList;
 
@@ -139,7 +138,7 @@ public class ProjectController {
     public ObservableList<Drink> sortMenuItemByPriceHighToLow() {
         ObservableList<Drink> menuList = model.getMenu();
 
-        menuList.sort(Comparator.comparing(Drink::getPrice).reversed());
+        menuList.sort(Comparator.comparing(Drink::getPrice));
 
         return menuList;
     }

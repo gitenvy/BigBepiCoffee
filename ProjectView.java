@@ -111,7 +111,7 @@ public class ProjectView {
     }
 
     private void observeModelAndUpdateControls() {
-        // TODO
+        
     }
 
     private void updateControllerFromListeners() {
@@ -133,8 +133,6 @@ public class ProjectView {
         // should be in view orders. TODO 
         
 
-        this.btnBuyEspressoItem = new Button("Buy Espresso-based Item");
-        this.btnBuyFilterItem = new Button("Buy Fiter-based Item");
         this.btnViewOrders = new Button("View orders");
 
         btnViewOrders.setOnAction(event -> {
@@ -150,17 +148,16 @@ public class ProjectView {
         btnRemoveOrder.setOnAction(event -> {
             this.removeOrderWindow();
         });
-        this.btnFindOrderByName = new Button("Find an order by name");
-      //  btnFindOrderByName.setOnAction(event -> {
-       //     this.findOrderByNameWindows();
-       // });
-        this.btnFindOrdersByQuantity = new Button("Find order by quantitity");
-        this.btnViewEspressoOrders = new Button("View Espresso Orders");
-        this.btnViewFilterOrders = new Button("View Filter Orders");
-        this.btnCheckout = new Button("Checkout");
 
-        HBox menuButtonsOrderRow = new HBox(10, viewWholeMenuButton, btnViewOrders, btnRemoveOrder, btnFindOrderByName, btnFindOrdersByQuantity, btnViewEspressoOrders, btnViewFilterOrders);
-        HBox menuBuyAndCheckoutRow = new HBox(5, btnBuyEspressoItem, btnBuyFilterItem, btnCheckout);
+        this.btnCheckout = new Button("Checkout");
+        btnCheckout.setOnAction(event -> {
+            this.checkoutWindow();
+        });
+
+        HBox menuButtonsOrderRow = new HBox(10, viewWholeMenuButton, btnViewOrders, btnRemoveOrder);
+        menuButtonsOrderRow.setAlignment(Pos.CENTER);
+        HBox menuBuyAndCheckoutRow = new HBox(5,btnCheckout);
+        menuBuyAndCheckoutRow.setAlignment(Pos.CENTER);
 
         vbox.getChildren().addAll(menuButtonsOrderRow, menuBuyAndCheckoutRow);
 
@@ -185,12 +182,11 @@ public class ProjectView {
             }
 
             TextField sortField = new TextField();
-
-        sortField.textProperty().addListener((obs, old, newValue) -> {
-            // int sortIndex = controller.findOrderByName(newValue);
-            // ObservableList<Drink> sortedList = FXCollections.observableArrayList();
-            // sortedList.add(controller.getMenu().get(sortIndex));
-            // menuList.setItems(sortedList);
+            sortField.textProperty().addListener((obs, old, newValue) -> {
+                // int sortIndex = controller.findOrderByName(newValue);
+                // ObservableList<Drink> sortedList = FXCollections.observableArrayList();
+                // sortedList.add(controller.getMenu().get(sortIndex));
+                // menuList.setItems(sortedList);
             
 
             ObservableList<CoffeeMenuItem> sortedOrders = FXCollections.observableArrayList();
@@ -260,11 +256,8 @@ public class ProjectView {
             orderStage.setTitle("Orders");
             orderStage.show();
 
-            
-
+        
           
-
-
     }
 
     public void menuWindow() {
@@ -279,7 +272,7 @@ public class ProjectView {
 
         menuStage.setTitle("Menu");
         //ListView<Drink> menuList = new ListView<>();
-       TableView<Drink> menuTable = new TableView<>();
+        TableView<Drink> menuTable = new TableView<>();
 
         TableColumn<Drink, String> nameCol = new TableColumn<>("Name");
         nameCol.setCellValueFactory(cellData ->
@@ -451,6 +444,46 @@ public class ProjectView {
 
     }
 
+    public void checkoutWindow() {
+
+        Stage checkoutStage = new Stage();
+
+        checkoutStage.setTitle("Checkout");
+        TableView<CoffeeMenuItem> checkoutTable = new TableView<>();
+
+        TableColumn<CoffeeMenuItem, String> nameCol = new TableColumn<>("Name");
+        nameCol.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getName()));
+
+        TableColumn<CoffeeMenuItem, Double> priceCol = new TableColumn<>("Total Price");
+        priceCol.setCellValueFactory(cellData ->
+                new SimpleObjectProperty<>(cellData.getValue().getTotalPrice()));
+
+        TableColumn<CoffeeMenuItem, Integer> qtyCol = new TableColumn<>("Quantity");
+        qtyCol.setCellValueFactory(cellData ->
+                new SimpleObjectProperty<>(cellData.getValue().getQuantity()));
+
+        checkoutTable.getColumns().addAll(nameCol, qtyCol, priceCol);
+        checkoutTable.setItems(controller.getOrders());
+
+        Label totalLabel = new Label("Total Price for Checkout: $ " +  model.getCheckoutPrice());
+
+        Button payBtn = new Button("Checkout & Exit");
+        payBtn.setOnAction(event -> {
+            checkoutStage.close();
+            primaryStage.close();
+
+        });
+
+        VBox root = new VBox(checkoutTable, totalLabel, payBtn);
+        root.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(root, 400, 300);
+        checkoutStage.setScene(scene);
+        checkoutStage.initOwner(primaryStage);
+        checkoutStage.show();
+
+    }
+
    
 
 
@@ -466,9 +499,9 @@ public class ProjectView {
         vbox = new VBox(5);
         vbox.setAlignment(Pos.CENTER);
        
-    
 
-    }
+
+}
 
 
 
