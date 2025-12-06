@@ -174,6 +174,8 @@ public class ProjectView {
     }
 
     public void viewOrders() {
+
+            
     
             ListView<CoffeeMenuItem> orderList = new ListView<>();
 
@@ -252,6 +254,10 @@ public class ProjectView {
             VBox root = new VBox(sortNameRow,sortTypeRow, orderList);
             Scene scene = new Scene(root, 400, 300);
 
+            orderStage.initOwner(primaryStage);
+            orderStage.initModality(Modality.APPLICATION_MODAL); 
+
+
             orderStage.setScene(scene);
             orderStage.setTitle("Orders");
             orderStage.show();
@@ -264,9 +270,11 @@ public class ProjectView {
 
         // TODO : Make a tableView instead.
 
+
         Stage menuStage = new Stage();
 
-
+        menuStage.initOwner(primaryStage);
+        menuStage.initModality(Modality.APPLICATION_MODAL);
 
 
 
@@ -439,7 +447,12 @@ public class ProjectView {
 
             orderStage.setScene(scene);
             orderStage.setTitle("Orders");
-            orderStage.initOwner(primaryStage); 
+            
+
+           
+            orderStage.initOwner(primaryStage);
+            orderStage.initModality(Modality.APPLICATION_MODAL); 
+
             orderStage.show();
 
     }
@@ -447,6 +460,10 @@ public class ProjectView {
     public void checkoutWindow() {
 
         Stage checkoutStage = new Stage();
+       
+        checkoutStage.initOwner(primaryStage);
+        checkoutStage.initModality(Modality.APPLICATION_MODAL); 
+
 
         checkoutStage.setTitle("Checkout");
         TableView<CoffeeMenuItem> checkoutTable = new TableView<>();
